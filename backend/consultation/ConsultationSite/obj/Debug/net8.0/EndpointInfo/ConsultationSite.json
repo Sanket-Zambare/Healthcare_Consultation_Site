@@ -1292,34 +1292,31 @@
       },
       "AppointmentStatus": {
         "enum": [
-          0,
-          1,
-          2
+          "Booked",
+          "Cancelled",
+          "Completed"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "AvailabilityStatus": {
         "enum": [
-          0,
-          1,
-          2
+          "Available",
+          "Unavailable",
+          "Busy"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "DayOfWeek": {
         "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "Doctor": {
         "type": "object",
@@ -1402,12 +1399,11 @@
       },
       "Gender": {
         "enum": [
-          0,
-          1,
-          2
+          "Male",
+          "Female",
+          "Other"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "Login": {
         "type": "object",
@@ -1529,27 +1525,24 @@
       },
       "PaymentStatus": {
         "enum": [
-          0,
-          1
+          "Paid",
+          "Unpaid"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "ProfileStatus": {
         "enum": [
-          0,
-          1
+          "Approved",
+          "Pending"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "UserType": {
         "enum": [
-          0,
-          1
+          "Patient",
+          "Doctor"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       }
     },
     "securitySchemes": {

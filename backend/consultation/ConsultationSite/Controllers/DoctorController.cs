@@ -122,8 +122,8 @@ namespace ConsultationSite.Controllers
         }
 
         // ===================== GENERAL DOCTOR LOOKUP =====================
-
-        [Authorize(Roles = "Admin,Patient,Doctor")]
+        [AllowAnonymous]
+        //[Authorize(Roles = "Admin,Patient,Doctor")]
         [HttpGet("getAllDoctors")]
         public async Task<IActionResult> GetAllDoctors()
         {
@@ -131,7 +131,8 @@ namespace ConsultationSite.Controllers
             return Ok(doctors);
         }
 
-        [Authorize(Roles = "Admin,Patient,Doctor")]
+        [AllowAnonymous]
+       // [Authorize(Roles = "Admin,Patient,Doctor")]
         [HttpGet("doctorByName/{name}")]
         public async Task<IActionResult> GetDoctorByName(string name)
         {

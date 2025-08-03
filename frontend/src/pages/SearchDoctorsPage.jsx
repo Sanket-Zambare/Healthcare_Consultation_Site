@@ -4,8 +4,8 @@ import apiService from '../services/apiService';
 import DoctorCard from '../components/doctor/DoctorCard';
 
 const SearchDoctorsPage = () => {
-  const [doctors, setDoctors] = useState([]);
-  const [filteredDoctors, setFilteredDoctors] = useState([]);
+  const [originalDoctors, setOriginalDoctors] = useState([]); // All from DB
+  const [doctors, setDoctors] = useState([]); // Shown list
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
     name: '',
@@ -17,44 +17,49 @@ const SearchDoctorsPage = () => {
   }, []);
 
   useEffect(() => {
-    filterDoctors();
-  }, [filters, doctors]);
+    applyFilters();
+  }, [filters, originalDoctors]);
 
   const fetchDoctors = async () => {
     try {
       const data = await apiService.getDoctors();
-      setDoctors(data);
-      setFilteredDoctors(data);
+      setOriginalDoctors(data); // Store all
     } catch (err) {
-      console.error('Failed to fetch doctors');
+      console.error('Failed to fetch doctors:', err);
     } finally {
       setLoading(false);
     }
   };
 
-  const filterDoctors = () => {
-    let filtered = doctors;
+  const applyFilters = () => {
+    let filtered = [...originalDoctors];
 
-    if (filters.name) {
-      filtered = filtered.filter(doctor =>
-        doctor.Name.toLowerCase().includes(filters.name.toLowerCase())
+    if (filters.name.trim()) {
+      const name = filters.name.toLowerCase();
+      filtered = filtered.filter(doc =>
+        doc.FullName.toLowerCase().includes(name)
       );
     }
 
-    if (filters.specialization) {
-      filtered = filtered.filter(doctor =>
-        doctor.Specialization.toLowerCase().includes(filters.specialization.toLowerCase())
+    if (filters.specialization.trim()) {
+      const spec = filters.specialization.toLowerCase();
+      filtered = filtered.filter(doc =>
+        doc.Specialization.toLowerCase().includes(spec)
       );
     }
 
-    setFilteredDoctors(filtered);
+    setDoctors(filtered);
   };
 
   const handleFilterChange = (e) => {
-    setFilters({
-      ...filters,
+    setFilters(prev => ({
+      ...prev,
       [e.target.name]: e.target.value
-    });
+    }));
+  };
+
+  const handleClearFilters = () => {
+    setFilters({ name: '', specialization: '' });
   };
 
   const specializations = [
@@ -72,7 +77,6 @@ const SearchDoctorsPage = () => {
         </Col>
       </Row>
 
-      {/* Search Filters */}
       <Row className="mb-4">
         <Col md={6}>
           <Form.Group>
@@ -104,30 +108,27 @@ const SearchDoctorsPage = () => {
         </Col>
       </Row>
 
-      {/* Results */}
       <Row>
         <Col>
           {loading ? (
             <div className="text-center py-5">
-              <div className="spinner-border text-primary" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
+              <div className="spinner-border text-primary" role="status" />
             </div>
-          ) : filteredDoctors.length === 0 ? (
+          ) : doctors.length === 0 ? (
             <Card className="text-center py-5">
               <Card.Body>
                 <h5>No doctors found</h5>
                 <p className="text-muted mb-3">
-                  Try adjusting your search criteria or browse all doctors.
+                  Try adjusting your search or filters.
                 </p>
-                <Button variant="primary" onClick={() => setFilters({ name: '', specialization: '' })}>
+                <Button variant="primary" onClick={handleClearFilters}>
                   Clear Filters
                 </Button>
               </Card.Body>
             </Card>
           ) : (
             <Row className="g-4">
-              {filteredDoctors.map(doctor => (
+              {doctors.map(doctor => (
                 <Col key={doctor.DoctorID} md={6} lg={4}>
                   <DoctorCard doctor={doctor} />
                 </Col>

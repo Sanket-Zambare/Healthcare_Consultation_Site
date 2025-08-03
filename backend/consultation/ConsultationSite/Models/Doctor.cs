@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ConsultationSite.Models
 {
@@ -27,9 +28,10 @@ namespace ConsultationSite.Models
 
         public int Experience { get; set; }  // years of experience
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public ProfileStatus? ProfileStatus { get; set; }
 
-        public string? ContactNumber { get; set; }
+        public string  ContactNumber { get; set; }
 
         // Navigation property
         public ICollection<DoctorAvailability>? Availabilities { get; set; }

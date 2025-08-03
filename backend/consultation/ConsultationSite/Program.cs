@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using System.Text.Json.Serialization;
 
 namespace ConsultationSite
 {
@@ -13,25 +14,33 @@ namespace ConsultationSite
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            // ✅ Add services to the container
+            builder.Services.AddControllersWithViews()
+                .AddJsonOptions(options =>
+                {
+                    // ✅ Enum and object cycle handling
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                });
 
             builder.Services.AddDbContext<ConsultationContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("conStr") ?? throw new InvalidOperationException("Connection string 'conStr' not found.")));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("conStr") ??
+                    throw new InvalidOperationException("Connection string 'conStr' not found.")));
+
             builder.Services.AddScoped<TokenService>();
 
-            // ✅ Add CORS services
+            // ✅ CORS setup for frontend (React)
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowReactApp", policy =>
                 {
-                    policy.WithOrigins("http://localhost:3000") // 👈 your React frontend
+                    policy.WithOrigins("http://localhost:3000")
                           .AllowAnyHeader()
                           .AllowAnyMethod();
                 });
             });
 
-            // ✅ JWT Authentication
+            // ✅ JWT Authentication setup
             var jwtSettings = builder.Configuration.GetSection("Jwt");
             var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]);
 
@@ -57,7 +66,7 @@ namespace ConsultationSite
                 };
             });
 
-            // ✅ Swagger with JWT
+            // ✅ Swagger with JWT support
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
@@ -117,10 +126,9 @@ namespace ConsultationSite
 
             app.UseRouting();
 
-            // ✅ Enable CORS before Authentication/Authorization
             app.UseCors("AllowReactApp");
 
-            app.UseAuthentication(); // Needed for JWT
+            app.UseAuthentication(); // JWT auth
             app.UseAuthorization();
 
             app.MapControllerRoute(

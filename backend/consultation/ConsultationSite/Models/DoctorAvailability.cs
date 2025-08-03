@@ -1,4 +1,6 @@
-﻿namespace ConsultationSite.Models
+﻿using System.Text.Json.Serialization;
+
+namespace ConsultationSite.Models
 {
     public enum AvailabilityStatus
     {
@@ -13,6 +15,7 @@
         public int DoctorID { get; set; }
         public Doctor? Doctor { get; set; }
 
+       // [JsonConverter(typeof(JsonStringEnumConverter))]
         public DayOfWeek Day { get; set; }
 
         public TimeSpan From { get; set; }

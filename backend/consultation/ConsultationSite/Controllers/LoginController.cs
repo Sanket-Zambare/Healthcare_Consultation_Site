@@ -2,6 +2,7 @@
 using ConsultationSite.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConsultationSite.Controllers
 {
@@ -18,6 +19,7 @@ namespace ConsultationSite.Controllers
             _tokenService = tokenService;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] Login model)
         {
