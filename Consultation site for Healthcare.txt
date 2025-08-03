@@ -1,0 +1,117 @@
+
+Consultation site for an healthcare
+
+Group Members:
+1.Ajim Sanadi(250245920075)
+2.Amol Borse(250245920012) 
+3.Devyani Zode(250245920022)
+4.Nida Kazi(250245920038)
+5.Sanket Zambare(250245920099)
+
+1. Introduction
+The Online Healthcare Consultation System is a web-based platform designed to simplify and digitize the interaction between patients and doctors. In today’s fast-paced world, accessing timely healthcare can be challenging due to distance, busy schedules. This system aims to solve those issues by allowing patients to book appointments, consult doctors, and receive digital prescriptions from the comfort of their homes.
+
+The system supports three main types of users:
+- Patients: who can register, search for doctors, and book appointments.
+- Doctors: who can manage their availability, consult patients, and provide prescriptions.
+- Admins: who monitor the overall system and manage users and appointments.
+
+problem Faced-
+
+->Access to quality healthcare is limited in rural areas.
+
+->Urban hospitals are often overcrowded with long waiting times.
+
+->Scheduling and attending doctor appointments can be challenging due to travel issues.
+
+->Elderly individuals and those with disabilities face even greater difficulty reaching medical facilities.
+
+->Many people are unaware of the right doctor or specialist to consult for their condition.
+
+solution
+
+1.Online Doctor Access for Villages:
+  People in rural areas can connect with doctors online through  chat consultations, reducing the need to travel far.
+
+2.No Long Queues:
+  The site allows users to book appointments online, avoiding long lines and crowded hospitals in cities.
+
+3.Easy Appointment Booking:
+  Patients can easily choose a time that suits them, and receive reminders so they don’t miss their appointments.
+
+4.Support for Elderly & Disabled:
+  Elderly and disabled patients can consult doctors from home without struggling to reach hospitals.
+
+5.Doctor Matching Feature:
+  The site can suggest the right specialist based on symptoms or health issues, so people don’t get confused about which doctor to visit.
+
+6.24/7 Availability:
+  Emergency help or general consultations can be available any time, improving access to healthcare.
+
+7.Medical History & Reports Online:
+  Patients can upload and store their medical records, which doctors can review during consultation—saving time and improving diagnosis.
+
+
+
+Goals/Objective
+  - Develop a user-friendly web platform for online consultations.
+  - Allow patients to search for doctors based on specialization and availability.
+  - Enable secure appointment booking and chat-based consultation.
+  - Provide doctors with features to manage schedules and issue digital prescriptions.
+  - Allow administrators to manage users and monitor activities.
+
+
+features
+->24/7 Availability
+->Faster Response from Specialist Doctors
+->Secure And Confidential Communication
+->Comfort And Convenience
+->Saves Travelling Time/Costs
+->Reduces Waiting Time
+->Easy Appointment Booking
+->Quick Interaction With Doctor
+->Hygienic and safe 
+->No Disruption to Daily Routine
+
+
+H/W Requirements & S/W Requirements:-
+
+Hardware Requirements:
+- Processor: Intel i3 or higher
+- RAM: 4 GB minimum
+
+Software Requirements:
+- Operating System: Windows 10
+- Backend: .NET Core
+- Frontend: React.js
+- Database: Microsoft SQL
+- Tools: Visual Studio ,VS Code, Git , GitHub
+
+  
+2.patient WorkFlow-
+  ->patient login
+  ->patient search for doctor
+  ->patient books appointment
+  ->patient will consult with doctor
+  ->patient gets prescription
+
+3.Doctor WorkFlow
+
+   ->doctor login
+   ->doctor checks appointment and attends appointment 
+   ->doctor prescribes
+  
+
+admin workflow
+
+   ->login
+   ->overlook
+
+
+ 
+7.Entity-Relationship Diagram(ERD)
+8.Class diagram
+9.usecase diagram
+10.DAta Flow Diagram
+11.Thank you
+
