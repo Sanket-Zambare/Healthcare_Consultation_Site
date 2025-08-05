@@ -1,0 +1,192 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\devya\\OneDrive\\Desktop\\backend\\consultation\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\devya\\onedrive\\desktop\\backend\\consultation\\consultationsite\\controllers\\doctorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\controllers\\doctorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\devya\\onedrive\\desktop\\backend\\consultation\\consultationsite\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\devya\\onedrive\\desktop\\backend\\consultation\\consultationsite\\models\\doctoravailability.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\models\\doctoravailability.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\devya\\onedrive\\desktop\\backend\\consultation\\consultationsite\\models\\doctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\models\\doctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/._SQLEXPRESS01/consultationSite/True/SqlTable/dbo.DoctorAvailabilities.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/._SQLEXPRESS01/consultationSite/True/SqlTable/dbo.Doctor.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\devya\\onedrive\\desktop\\backend\\consultation\\consultationsite\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\devya\\onedrive\\desktop\\backend\\consultation\\consultationsite\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\devya\\onedrive\\desktop\\backend\\consultation\\consultationsite\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\devya\\onedrive\\desktop\\backend\\consultation\\consultationsite\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\devya\\onedrive\\desktop\\backend\\consultation\\consultationsite\\models\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\models\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "dbo.DoctorAvailabilities.sql",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/._SQLEXPRESS01/consultationSite/True/SqlTable/dbo.DoctorAvailabilities.sql",
+              "ToolTip": "ViewDataWindow_MSSQL__/._SQLEXPRESS01/consultationSite/True/SqlTable/dbo.DoctorAvailabilities.sql",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-08-04T12:45:19.781Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "dbo.Doctor.sql",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/._SQLEXPRESS01/consultationSite/True/SqlTable/dbo.Doctor.sql",
+              "ToolTip": "ViewDataWindow_MSSQL__/._SQLEXPRESS01/consultationSite/True/SqlTable/dbo.Doctor.sql",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-08-04T11:59:06.553Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\devya\\OneDrive\\Desktop\\backend\\consultation\\ConsultationSite\\appsettings.json",
+              "RelativeDocumentMoniker": "ConsultationSite\\appsettings.json",
+              "ToolTip": "C:\\Users\\devya\\OneDrive\\Desktop\\backend\\consultation\\ConsultationSite\\appsettings.json",
+              "RelativeToolTip": "ConsultationSite\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-08-03T17:22:45.671Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DoctorController.cs",
+              "DocumentMoniker": "C:\\Users\\devya\\OneDrive\\Desktop\\backend\\consultation\\ConsultationSite\\Controllers\\DoctorController.cs",
+              "RelativeDocumentMoniker": "ConsultationSite\\Controllers\\DoctorController.cs",
+              "ToolTip": "C:\\Users\\devya\\OneDrive\\Desktop\\backend\\consultation\\ConsultationSite\\Controllers\\DoctorController.cs",
+              "RelativeToolTip": "ConsultationSite\\Controllers\\DoctorController.cs",
+              "ViewState": "AgIAAGUAAAAAAAAAAAAkwHgAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-03T14:07:40.142Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\devya\\OneDrive\\Desktop\\backend\\consultation\\ConsultationSite\\Program.cs",
+              "RelativeDocumentMoniker": "ConsultationSite\\Program.cs",
+              "ToolTip": "C:\\Users\\devya\\OneDrive\\Desktop\\backend\\consultation\\ConsultationSite\\Program.cs",
+              "RelativeToolTip": "ConsultationSite\\Program.cs",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAwwHoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-03T13:39:03.819Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DoctorAvailability.cs",
+              "DocumentMoniker": "C:\\Users\\devya\\OneDrive\\Desktop\\backend\\consultation\\ConsultationSite\\Models\\DoctorAvailability.cs",
+              "RelativeDocumentMoniker": "ConsultationSite\\Models\\DoctorAvailability.cs",
+              "ToolTip": "C:\\Users\\devya\\OneDrive\\Desktop\\backend\\consultation\\ConsultationSite\\Models\\DoctorAvailability.cs",
+              "RelativeToolTip": "ConsultationSite\\Models\\DoctorAvailability.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-03T13:27:27.225Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Doctor.cs",
+              "DocumentMoniker": "C:\\Users\\devya\\OneDrive\\Desktop\\backend\\consultation\\ConsultationSite\\Models\\Doctor.cs",
+              "RelativeDocumentMoniker": "ConsultationSite\\Models\\Doctor.cs",
+              "ToolTip": "C:\\Users\\devya\\OneDrive\\Desktop\\backend\\consultation\\ConsultationSite\\Models\\Doctor.cs",
+              "RelativeToolTip": "ConsultationSite\\Models\\Doctor.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAmwCoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-03T12:36:01.827Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\devya\\OneDrive\\Desktop\\backend\\consultation\\ConsultationSite\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "ConsultationSite\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\devya\\OneDrive\\Desktop\\backend\\consultation\\ConsultationSite\\Properties\\launchSettings.json",
+              "RelativeToolTip": "ConsultationSite\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-08-03T14:32:59.697Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Admin.cs",
+              "DocumentMoniker": "C:\\Users\\devya\\OneDrive\\Desktop\\backend\\consultation\\ConsultationSite\\Models\\Admin.cs",
+              "RelativeDocumentMoniker": "ConsultationSite\\Models\\Admin.cs",
+              "ToolTip": "C:\\Users\\devya\\OneDrive\\Desktop\\backend\\consultation\\ConsultationSite\\Models\\Admin.cs",
+              "RelativeToolTip": "ConsultationSite\\Models\\Admin.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAwBcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-03T12:37:25.236Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\devya\\OneDrive\\Desktop\\backend\\consultation\\ConsultationSite\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "ConsultationSite\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\devya\\OneDrive\\Desktop\\backend\\consultation\\ConsultationSite\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "ConsultationSite\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-03T17:08:30.636Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TokenService.cs",
+              "DocumentMoniker": "C:\\Users\\devya\\OneDrive\\Desktop\\backend\\consultation\\ConsultationSite\\Services\\TokenService.cs",
+              "RelativeDocumentMoniker": "ConsultationSite\\Services\\TokenService.cs",
+              "ToolTip": "C:\\Users\\devya\\OneDrive\\Desktop\\backend\\consultation\\ConsultationSite\\Services\\TokenService.cs",
+              "RelativeToolTip": "ConsultationSite\\Services\\TokenService.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAmwCYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-03T17:20:40.567Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
