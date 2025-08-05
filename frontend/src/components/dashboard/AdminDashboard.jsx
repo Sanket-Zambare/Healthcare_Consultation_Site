@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Card, Button, Table } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Row, Col, Card, Button, Table, Spinner } from 'react-bootstrap';
 import apiService from '../../services/apiService';
-
+import { useNavigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
-  const [stats, setStats] = useState({});
+  const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchDashboardStats();
@@ -14,14 +14,22 @@ const AdminDashboard = () => {
 
   const fetchDashboardStats = async () => {
     try {
-      const data = await apiService.getDashboardStats();
-      setStats(data);
-    } catch (err) {
-      console.error('Failed to fetch dashboard stats');
+      const response = await apiService.getDashboardStats();
+      setStats(response);
+    } catch (error) {
+      console.error('Failed to fetch dashboard stats:', error);
     } finally {
       setLoading(false);
     }
   };
+
+  if (loading || !stats) {
+    return (
+      <div className="text-center my-5">
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -32,143 +40,70 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Stats Cards */}
       <Row className="g-4 mb-5">
         <Col md={3}>
-          <Card className="dashboard-stats h-100">
-            <Card.Body className="text-center">
-              <div className="mb-2" style={{ fontSize: '2rem' }}>👥</div>
-              <h3 className="mb-0">{stats.totalPatients || 0}</h3>
+          <Card className="h-100 text-center">
+            <Card.Body>
+              <div style={{ fontSize: '2rem' }}>👥</div>
+              <h3>{stats.totalPatients}</h3>
               <small>Total Patients</small>
             </Card.Body>
           </Card>
         </Col>
-        
+
         <Col md={3}>
-          <Card className="dashboard-stats h-100">
-            <Card.Body className="text-center">
-              <div className="mb-2" style={{ fontSize: '2rem' }}>👨‍⚕️</div>
-              <h3 className="mb-0">{stats.totalDoctors || 0}</h3>
+          <Card className="h-100 text-center">
+            <Card.Body>
+              <div style={{ fontSize: '2rem' }}>👨‍⚕️</div>
+              <h3>{stats.totalDoctors}</h3>
               <small>Total Doctors</small>
             </Card.Body>
           </Card>
         </Col>
-        
+
         <Col md={3}>
-          <Card className="dashboard-stats h-100">
-            <Card.Body className="text-center">
-              <div className="mb-2" style={{ fontSize: '2rem' }}>📅</div>
-              <h3 className="mb-0">{stats.totalAppointments || 0}</h3>
+          <Card className="h-100 text-center">
+            <Card.Body>
+              <div style={{ fontSize: '2rem' }}>📅</div>
+              <h3>{stats.totalAppointments}</h3>
               <small>Total Appointments</small>
             </Card.Body>
           </Card>
         </Col>
-        
+
         <Col md={3}>
-          <Card className="dashboard-stats h-100">
-            <Card.Body className="text-center">
-              <div className="mb-2" style={{ fontSize: '2rem' }}>💰</div>
-              <h3 className="mb-0">${(stats.totalPayments * 500) || 0}</h3>
-              <small>Total Revenue</small>
+          <Card className="h-100 text-center">
+            <Card.Body>
+              <div style={{ fontSize: '2rem' }}>🧑‍⚕️</div>
+              <h3>{stats.pendingApprovals}</h3>
+              <small>Pending Approvals</small>
             </Card.Body>
           </Card>
         </Col>
       </Row>
 
-      {/* Management Cards */}
       <Row className="g-4 mb-5">
-        <Col md={4}>
-          <Card className="card-hover h-100">
-            <Card.Body className="text-center">
-              <div className="mb-3" style={{ fontSize: '3rem' }}>👨‍⚕️</div>
+        <Col md={6}>
+          <Card className="card-hover h-100 text-center">
+            <Card.Body>
+              <div style={{ fontSize: '3rem' }}>🕐</div>
               <Card.Title>Doctor Approvals</Card.Title>
-              <Card.Text>
-                {stats.pendingApprovals || 0} doctors pending approval
-              </Card.Text>
-              <Button variant="primary" size="sm">
+              <Card.Text>{stats.pendingApprovals} doctors pending</Card.Text>
+              <Button size="sm" onClick={() => navigate('/admin/approvals')}>
                 Review Approvals
               </Button>
             </Card.Body>
           </Card>
         </Col>
-        
-        <Col md={4}>
-          <Card className="card-hover h-100">
-            <Card.Body className="text-center">
-              <div className="mb-3" style={{ fontSize: '3rem' }}>👥</div>
+        <Col md={6}>
+          <Card className="card-hover h-100 text-center">
+            <Card.Body>
+              <div style={{ fontSize: '3rem' }}>👤</div>
               <Card.Title>User Management</Card.Title>
-              <Card.Text>
-                Manage patients and doctors accounts
-              </Card.Text>
-              <Button variant="outline-primary" size="sm">
+              <Card.Text>Manage all users in system</Card.Text>
+              <Button size="sm" variant="outline-primary" onClick={() => navigate('/admin/users')}>
                 Manage Users
               </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        
-        <Col md={4}>
-          <Card className="card-hover h-100">
-            <Card.Body className="text-center">
-              <div className="mb-3" style={{ fontSize: '3rem' }}>📊</div>
-              <Card.Title>System Logs</Card.Title>
-              <Card.Text>
-                View system activity and logs
-              </Card.Text>
-              <Button variant="outline-primary" size="sm">
-                View Logs
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-
-      {/* Recent Activity */}
-      <Row>
-        <Col>
-          <Card>
-            <Card.Header>
-              <h5 className="mb-0">Recent Activity</h5>
-            </Card.Header>
-            <Card.Body>
-              {loading ? (
-                <div className="text-center py-3">
-                  <div className="spinner-border text-primary" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </div>
-                </div>
-              ) : (
-                <Table responsive>
-                  <thead>
-                    <tr>
-                      <th>Activity</th>
-                      <th>User</th>
-                      <th>Date</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>New Doctor Registration</td>
-                      <td>Dr. John Smith</td>
-                      <td>2024-01-15</td>
-                      <td><span className="badge bg-warning">Pending</span></td>
-                    </tr>
-                    <tr>
-                      <td>Patient Registration</td>
-                      <td>Jane Doe</td>
-                      <td>2024-01-15</td>
-                      <td><span className="badge bg-success">Approved</span></td>
-                    </tr>
-                    <tr>
-                      <td>Appointment Completed</td>
-                      <td>Patient #1 - Dr. Sarah</td>
-                      <td>2024-01-14</td>
-                      <td><span className="badge bg-success">Completed</span></td>
-                    </tr>
-                  </tbody>
-                </Table>
-              )}
             </Card.Body>
           </Card>
         </Col>

@@ -4,8 +4,8 @@ import apiService from '../services/apiService';
 import DoctorCard from '../components/doctor/DoctorCard';
 
 const SearchDoctorsPage = () => {
-  const [originalDoctors, setOriginalDoctors] = useState([]); // All from DB
-  const [doctors, setDoctors] = useState([]); // Shown list
+  const [originalDoctors, setOriginalDoctors] = useState([]);
+  const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
     name: '',
@@ -23,9 +23,10 @@ const SearchDoctorsPage = () => {
   const fetchDoctors = async () => {
     try {
       const data = await apiService.getDoctors();
-      setOriginalDoctors(data); // Store all
-    } catch (err) {
-      console.error('Failed to fetch doctors:', err);
+      console.log('Fetched doctors:', data);
+      setOriginalDoctors(data || []);
+    } catch (error) {
+      console.error('Failed to fetch doctors:', error);
     } finally {
       setLoading(false);
     }
@@ -37,14 +38,14 @@ const SearchDoctorsPage = () => {
     if (filters.name.trim()) {
       const name = filters.name.toLowerCase();
       filtered = filtered.filter(doc =>
-        doc.FullName.toLowerCase().includes(name)
+        (doc.name || doc.Name || '').toLowerCase().includes(name)
       );
     }
 
     if (filters.specialization.trim()) {
       const spec = filters.specialization.toLowerCase();
       filtered = filtered.filter(doc =>
-        doc.Specialization.toLowerCase().includes(spec)
+        (doc.specialization || doc.Specialization || '').toLowerCase().includes(spec)
       );
     }
 
@@ -118,9 +119,7 @@ const SearchDoctorsPage = () => {
             <Card className="text-center py-5">
               <Card.Body>
                 <h5>No doctors found</h5>
-                <p className="text-muted mb-3">
-                  Try adjusting your search or filters.
-                </p>
+                <p className="text-muted mb-3">Try adjusting your search or filters.</p>
                 <Button variant="primary" onClick={handleClearFilters}>
                   Clear Filters
                 </Button>
@@ -129,7 +128,7 @@ const SearchDoctorsPage = () => {
           ) : (
             <Row className="g-4">
               {doctors.map(doctor => (
-                <Col key={doctor.DoctorID} md={6} lg={4}>
+                <Col key={doctor.doctorID || doctor.DoctorID} md={6} lg={4}>
                   <DoctorCard doctor={doctor} />
                 </Col>
               ))}

@@ -3,40 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\models\\doctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\models\\doctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\models\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\models\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\data\\consultationcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\data\\consultationcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\controllers\\doctorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\controllers\\doctorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\models\\doctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\models\\doctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\models\\doctoravailability.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\models\\doctoravailability.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\models\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\models\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,60 +34,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\appsettings.json",
-              "RelativeDocumentMoniker": "ConsultationSite\\appsettings.json",
-              "ToolTip": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\appsettings.json",
-              "RelativeToolTip": "ConsultationSite\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-08-03T17:22:45.671Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "TokenService.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Services\\TokenService.cs",
-              "RelativeDocumentMoniker": "ConsultationSite\\Services\\TokenService.cs",
-              "ToolTip": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Services\\TokenService.cs",
-              "RelativeToolTip": "ConsultationSite\\Services\\TokenService.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAmwCYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T17:20:40.567Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "ConsultationSite\\Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "ConsultationSite\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T17:08:30.636Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "launchSettings.json",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Properties\\launchSettings.json",
-              "RelativeDocumentMoniker": "ConsultationSite\\Properties\\launchSettings.json",
-              "ToolTip": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Properties\\launchSettings.json",
-              "RelativeToolTip": "ConsultationSite\\Properties\\launchSettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-08-03T14:32:59.697Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 4,
@@ -108,62 +44,70 @@
               "RelativeDocumentMoniker": "ConsultationSite\\Controllers\\DoctorController.cs",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Controllers\\DoctorController.cs",
               "RelativeToolTip": "ConsultationSite\\Controllers\\DoctorController.cs",
-              "ViewState": "AgIAAHsAAAAAAAAAAAAcwJIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAK0AAAAAAAAAAAAQwNAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T14:07:40.142Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-04T19:26:03.947Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Program.cs",
               "RelativeDocumentMoniker": "ConsultationSite\\Program.cs",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Program.cs",
               "RelativeToolTip": "ConsultationSite\\Program.cs",
-              "ViewState": "AgIAAHQAAAAAAAAAAAAmwI0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAGkAAAAAAAAAAAAYwHcAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T13:39:03.819Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-04T19:15:46.406Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "DoctorAvailability.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Models\\DoctorAvailability.cs",
-              "RelativeDocumentMoniker": "ConsultationSite\\Models\\DoctorAvailability.cs",
-              "ToolTip": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Models\\DoctorAvailability.cs",
-              "RelativeToolTip": "ConsultationSite\\Models\\DoctorAvailability.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAA8wBoAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "ConsultationContext.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Data\\ConsultationContext.cs",
+              "RelativeDocumentMoniker": "ConsultationSite\\Data\\ConsultationContext.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Data\\ConsultationContext.cs",
+              "RelativeToolTip": "ConsultationSite\\Data\\ConsultationContext.cs",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAYwGAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T13:27:27.225Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-04T18:20:07.748Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Admin.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Models\\Admin.cs",
-              "RelativeDocumentMoniker": "ConsultationSite\\Models\\Admin.cs",
-              "ToolTip": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Models\\Admin.cs",
-              "RelativeToolTip": "ConsultationSite\\Models\\Admin.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAAwBcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T12:37:25.236Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 0,
               "Title": "Doctor.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Models\\Doctor.cs",
               "RelativeDocumentMoniker": "ConsultationSite\\Models\\Doctor.cs",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Models\\Doctor.cs",
               "RelativeToolTip": "ConsultationSite\\Models\\Doctor.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAuwCYAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAABkAAAAAAAAAAAAkwAsAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T12:36:01.827Z",
+              "WhenOpened": "2025-08-04T17:56:44.051Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Admin.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Models\\Admin.cs",
+              "RelativeDocumentMoniker": "ConsultationSite\\Models\\Admin.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Models\\Admin.cs",
+              "RelativeToolTip": "ConsultationSite\\Models\\Admin.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAqwBcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-04T17:48:59.296Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "ConsultationSite\\Controllers\\AdminController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "ConsultationSite\\Controllers\\AdminController.cs",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAYwG0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-04T17:48:55.063Z"
             }
           ]
         }

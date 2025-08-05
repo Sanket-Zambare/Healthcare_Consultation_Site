@@ -1,28 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Alert } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import apiService from '../services/apiService';
 import AppointmentForm from '../components/appointment/AppointmentForm';
+import { useAuth } from '../context/AuthContext';
 
 const BookAppointmentPage = () => {
   const { doctorId } = useParams();
+  const navigate = useNavigate();
   const [doctor, setDoctor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const { user } = useAuth();
 
   useEffect(() => {
-    fetchDoctor();
-  }, [doctorId]);
+    const fetchDoctor = async () => {
+      if (!doctorId) {
+        navigate('/find-doctors');
+        return;
+      }
+      try {
+        const doctorData = await apiService.getDoctorById(doctorId);
+        setDoctor(doctorData);
+      } catch (err) {
+        console.error('Error fetching doctor:', err);
+        setError('Doctor not found');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const fetchDoctor = async () => {
-    try {
-      const doctorData = await apiService.getDoctorById(parseInt(doctorId));
-      setDoctor(doctorData);
-    } catch (err) {
-      setError('Doctor not found');
-    } finally {
-      setLoading(false);
-    }
+    fetchDoctor();
+  }, [doctorId, navigate]);
+
+  const formatAvailability = (availability) => {
+    if (!availability || availability.length === 0) return 'Not available';
+    return availability.map((slot, index) => (
+      <div key={index}>
+        {slot.day}: {slot.from} - {slot.to} ({slot.status})
+      </div>
+    ));
   };
 
   if (loading) {
@@ -45,6 +62,11 @@ const BookAppointmentPage = () => {
     );
   }
 
+  if (!user) {
+    navigate('/login');
+    return null;
+  }
+
   return (
     <Container className="my-4">
       <Row>
@@ -52,21 +74,21 @@ const BookAppointmentPage = () => {
           <Card className="mb-4">
             <Card.Body className="text-center">
               <img
-                src={doctor.DoctorImage}
-                alt={doctor.Name}
+                src={doctor?.doctor_Image || '/default-doctor.jpg'}
+                alt={doctor?.name || 'Doctor'}
                 className="rounded-circle mb-3"
                 style={{ width: '100px', height: '100px', objectFit: 'cover' }}
               />
-              <h4>{doctor.Name}</h4>
-              <p className="text-muted">{doctor.Specialization}</p>
+              <h4>{doctor?.name}</h4>
+              <p className="text-muted">{doctor?.specialization}</p>
               <p className="small">
-                <strong>Experience:</strong> {doctor.Experience}<br/>
-                <strong>Availability:</strong> {doctor.Availability}
+                <strong>Experience:</strong> {doctor?.experience}<br />
+                <strong>Availability:</strong> {formatAvailability(doctor?.availability)}
               </p>
             </Card.Body>
           </Card>
         </Col>
-        
+
         <Col lg={8}>
           <Card>
             <Card.Header>

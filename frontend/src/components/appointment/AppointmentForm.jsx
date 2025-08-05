@@ -15,7 +15,7 @@ const AppointmentForm = ({ doctor }) => {
   const [bookedSlots, setBookedSlots] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  
+
   const { user } = useAuth();
   const { showToast } = useApp();
   const navigate = useNavigate();
@@ -28,28 +28,23 @@ const AppointmentForm = ({ doctor }) => {
 
   const fetchAvailableSlots = async () => {
     try {
-      // Get doctor's availability
       const availability = await apiService.getDoctorAvailability(doctor.DoctorID);
-      
-      // Get booked appointments for the selected date
       const appointments = await apiService.getAppointments(null, doctor.DoctorID);
+
       const dayBookedSlots = appointments
         .filter(apt => apt.Date === formData.date && apt.Status !== 'Cancelled')
         .map(apt => apt.TimeSlot);
-      
+
       setBookedSlots(dayBookedSlots);
-      
-      // Generate time slots based on availability
       const slots = generateTimeSlots(availability);
       setAvailableSlots(slots);
     } catch (err) {
-      console.error('Failed to fetch availability');
+      console.error('Failed to fetch slots:', err);
     }
   };
 
   const generateTimeSlots = (availability) => {
-    // This is a simplified version - in real app, you'd parse the availability properly
-    const slots = [
+    return [
       '09:00 AM - 10:00 AM',
       '10:00 AM - 11:00 AM',
       '11:00 AM - 12:00 PM',
@@ -57,8 +52,6 @@ const AppointmentForm = ({ doctor }) => {
       '03:00 PM - 04:00 PM',
       '04:00 PM - 05:00 PM'
     ];
-    
-    return slots;
   };
 
   const handleChange = (e) => {
@@ -73,8 +66,14 @@ const AppointmentForm = ({ doctor }) => {
     setLoading(true);
     setError('');
 
+    if (!formData.date || !formData.timeSlot) {
+      setError('Please select both date and time slot.');
+      setLoading(false);
+      return;
+    }
+
     if (bookedSlots.includes(formData.timeSlot)) {
-      setError('This time slot is already booked. Please select another.');
+      setError('This time slot is already booked. Please choose another one.');
       setLoading(false);
       return;
     }
@@ -84,35 +83,40 @@ const AppointmentForm = ({ doctor }) => {
         DoctorID: doctor.DoctorID,
         PatientID: user.PatientID,
         Date: formData.date,
-        TimeSlot: formData.timeSlot
+        TimeSlot: formData.timeSlot,
+        Status: 'Pending',
+        PaymentStatus: 'Pending'
       };
 
-      const appointment = await apiService.createAppointment(appointmentData);
-      showToast('Appointment created! Please proceed to payment.', 'success');
-      navigate(`/payment/${appointment.AppointmentID}`);
+      showToast('Redirecting to payment...', 'info');
+
+      navigate('/payment', {
+        state: {
+          appointment: appointmentData,
+          amount: 50.0
+        }
+      });
     } catch (err) {
-      setError(err.message);
-      showToast(err.message, 'error');
+      console.error(err);
+      setError('Unexpected error.');
+      showToast('Something went wrong. Please try again.', 'danger');
     } finally {
       setLoading(false);
     }
   };
 
-  const getMinDate = () => {
-    const today = new Date();
-    return today.toISOString().split('T')[0];
-  };
+  const getMinDate = () => new Date().toISOString().split('T')[0];
 
   const getMaxDate = () => {
     const maxDate = new Date();
-    maxDate.setDate(maxDate.getDate() + 30); // Allow booking up to 30 days ahead
+    maxDate.setDate(maxDate.getDate() + 30);
     return maxDate.toISOString().split('T')[0];
   };
 
   return (
     <Form onSubmit={handleSubmit}>
       {error && <Alert variant="danger">{error}</Alert>}
-      
+
       <Row>
         <Col md={6}>
           <Form.Group className="mb-3">
@@ -140,8 +144,8 @@ const AppointmentForm = ({ doctor }) => {
                 <div
                   key={slot}
                   className={`availability-slot ${formData.timeSlot === slot ? 'selected' : ''} ${isBooked ? 'disabled' : ''}`}
-                  onClick={() => !isBooked && setFormData({...formData, timeSlot: slot})}
-                  style={{ 
+                  onClick={() => !isBooked && setFormData({ ...formData, timeSlot: slot })}
+                  style={{
                     pointerEvents: isBooked ? 'none' : 'auto',
                     opacity: isBooked ? 0.5 : 1
                   }}
@@ -168,7 +172,7 @@ const AppointmentForm = ({ doctor }) => {
         disabled={loading || !formData.date || !formData.timeSlot}
         className="w-100"
       >
-        {loading ? 'Booking...' : 'Proceed to Payment'}
+        {loading ? 'Redirecting...' : 'Proceed to Payment'}
       </Button>
     </Form>
   );

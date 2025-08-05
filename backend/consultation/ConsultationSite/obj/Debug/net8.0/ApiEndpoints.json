@@ -1,40 +1,8 @@
 [
   {
     "ContainingType": "ConsultationSite.Controllers.AdminController",
-    "Method": "CreateDoctor",
-    "RelativePath": "api/admin/doctor",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "doctor",
-        "Type": "ConsultationSite.Models.Doctor",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ConsultationSite.Controllers.AdminController",
-    "Method": "GetDoctorById",
-    "RelativePath": "api/admin/doctor/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ConsultationSite.Controllers.AdminController",
-    "Method": "UpdateDoctor",
-    "RelativePath": "api/admin/doctor/{id}",
+    "Method": "ApproveDoctor",
+    "RelativePath": "api/admin/approve-doctor/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -43,35 +11,14 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
-      },
-      {
-        "Name": "updatedDoctor",
-        "Type": "ConsultationSite.Models.Doctor",
-        "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
     "ContainingType": "ConsultationSite.Controllers.AdminController",
-    "Method": "DeleteDoctor",
-    "RelativePath": "api/admin/doctor/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ConsultationSite.Controllers.AdminController",
-    "Method": "GetAllDoctors",
-    "RelativePath": "api/admin/doctors",
+    "Method": "GetDashboardStats",
+    "RelativePath": "api/admin/dashboard-stats",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -80,77 +27,8 @@
   },
   {
     "ContainingType": "ConsultationSite.Controllers.AdminController",
-    "Method": "CreatePatient",
-    "RelativePath": "api/admin/patient",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "patient",
-        "Type": "ConsultationSite.Models.Patient",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ConsultationSite.Controllers.AdminController",
-    "Method": "GetPatientById",
-    "RelativePath": "api/admin/patient/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ConsultationSite.Controllers.AdminController",
-    "Method": "UpdatePatient",
-    "RelativePath": "api/admin/patient/{id}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "updatedPatient",
-        "Type": "ConsultationSite.Models.Patient",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ConsultationSite.Controllers.AdminController",
-    "Method": "DeletePatient",
-    "RelativePath": "api/admin/patient/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ConsultationSite.Controllers.AdminController",
-    "Method": "GetAllPatients",
-    "RelativePath": "api/admin/patients",
+    "Method": "GetPendingDoctors",
+    "RelativePath": "api/admin/pending-doctors",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -316,22 +194,6 @@
   },
   {
     "ContainingType": "ConsultationSite.Controllers.DoctorController",
-    "Method": "DeleteDoctorProfile",
-    "RelativePath": "api/doctor/deleteProfile/{doctorId}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "doctorId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ConsultationSite.Controllers.DoctorController",
     "Method": "GetDoctorByName",
     "RelativePath": "api/doctor/doctorByName/{name}",
     "HttpMethod": "GET",
@@ -354,6 +216,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ConsultationSite.Controllers.DoctorController",
+    "Method": "GetDoctorById",
+    "RelativePath": "api/doctor/getDoctorById/{doctorId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "doctorId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

@@ -6,7 +6,7 @@
     "version": "v1"
   },
   "paths": {
-    "/api/admin/doctors": {
+    "/api/admin/dashboard-stats": {
       "get": {
         "tags": [
           "Admin"
@@ -18,28 +18,19 @@
         }
       }
     },
-    "/api/admin/doctor/{id}": {
+    "/api/admin/pending-doctors": {
       "get": {
         "tags": [
           "Admin"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
         ],
         "responses": {
           "200": {
             "description": "OK"
           }
         }
-      },
+      }
+    },
+    "/api/admin/approve-doctor/{id}": {
       "put": {
         "tags": [
           "Admin"
@@ -55,204 +46,6 @@
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Doctor"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Doctor"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Doctor"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Admin"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/admin/doctor": {
-      "post": {
-        "tags": [
-          "Admin"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Doctor"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Doctor"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Doctor"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/admin/patients": {
-      "get": {
-        "tags": [
-          "Admin"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/admin/patient/{id}": {
-      "get": {
-        "tags": [
-          "Admin"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Admin"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Patient"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Patient"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Patient"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Admin"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/admin/patient": {
-      "post": {
-        "tags": [
-          "Admin"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Patient"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Patient"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Patient"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "OK"
@@ -621,8 +414,8 @@
         }
       }
     },
-    "/api/doctor/deleteProfile/{doctorId}": {
-      "delete": {
+    "/api/doctor/getDoctorById/{doctorId}": {
+      "get": {
         "tags": [
           "Doctor"
         ],

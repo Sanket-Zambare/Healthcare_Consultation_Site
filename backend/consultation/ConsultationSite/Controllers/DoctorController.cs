@@ -108,39 +108,101 @@ namespace ConsultationSite.Controllers
             return Ok(doctor);
         }
 
-        [Authorize(Roles = "Doctor")]
-        [HttpDelete("deleteProfile/{doctorId}")]
-        public async Task<IActionResult> DeleteDoctorProfile(int doctorId)
+        [AllowAnonymous]
+        [HttpGet("getDoctorById/{doctorId}")]
+        public async Task<IActionResult> GetDoctorById(int doctorId)
         {
-            var doctor = await _context.Doctors.FindAsync(doctorId);
+            var doctor = await _context.Doctors
+                .Include(d => d.Availabilities)
+                .Where(d => d.DoctorID == doctorId && d.ProfileStatus == ProfileStatus.Approved)
+                .FirstOrDefaultAsync();
+
             if (doctor == null)
                 return NotFound("Doctor not found");
 
-            _context.Doctors.Remove(doctor);
-            await _context.SaveChangesAsync();
-            return Ok(new { message = "Doctor profile deleted successfully." });
+            var doctorDTO = new
+            {
+                doctor.DoctorID,
+                doctor.Name,
+                doctor.Specialization,
+                Experience = doctor.Experience + " years experience",
+                doctor.Doctor_Image,
+                Availability = doctor.Availabilities!
+                    .Where(a => a.Status == AvailabilityStatus.Available)
+                    .Select(a => new
+                    {
+                        Day = a.Day.ToString(),
+                        From = a.From.ToString(@"hh\:mm"),
+                        To = a.To.ToString(@"hh\:mm"),
+                        Status = a.Status.ToString()
+                    })
+            };
+
+            return Ok(doctorDTO);
         }
 
+
         // ===================== GENERAL DOCTOR LOOKUP =====================
+
         [AllowAnonymous]
-        //[Authorize(Roles = "Admin,Patient,Doctor")]
         [HttpGet("getAllDoctors")]
         public async Task<IActionResult> GetAllDoctors()
         {
-            var doctors = await _context.Doctors.ToListAsync();
-            return Ok(doctors);
+            var doctors = await _context.Doctors
+                .Include(d => d.Availabilities)
+                .Where(d => d.ProfileStatus == ProfileStatus.Approved)
+                .ToListAsync();
+
+            var doctorDTOs = doctors.Select(d => new
+            {
+                d.DoctorID,
+                d.Name,
+                d.Specialization,
+                Experience = d.Experience + " years experience",
+                d.Doctor_Image,
+                Availability = d.Availabilities!
+                    .Where(a => a.Status == AvailabilityStatus.Available)
+                    .Select(a => new
+                    {
+                        Day = a.Day.ToString(),
+                        From = a.From.ToString(@"hh\:mm"),
+                        To = a.To.ToString(@"hh\:mm"),
+                        Status = a.Status.ToString()
+                    })
+            });
+
+            return Ok(doctorDTOs);
         }
 
         [AllowAnonymous]
-       // [Authorize(Roles = "Admin,Patient,Doctor")]
         [HttpGet("doctorByName/{name}")]
         public async Task<IActionResult> GetDoctorByName(string name)
         {
             var doctors = await _context.Doctors
-                .Where(d => d.Name.ToLower().Contains(name.ToLower()))
+                .Include(d => d.Availabilities)
+                .Where(d => d.Name.ToLower().Contains(name.ToLower()) &&
+                            d.ProfileStatus == ProfileStatus.Approved)
                 .ToListAsync();
 
-            return Ok(doctors);
+            var doctorDTOs = doctors.Select(d => new
+            {
+                d.DoctorID,
+                d.Name,
+                d.Specialization,
+                Experience = d.Experience + " years experience",
+                d.Doctor_Image,
+                Availability = d.Availabilities!
+                    .Where(a => a.Status == AvailabilityStatus.Available)
+                    .Select(a => new
+                    {
+                        Day = a.Day.ToString(),
+                        From = a.From.ToString(@"hh\:mm"),
+                        To = a.To.ToString(@"hh\:mm"),
+                        Status = a.Status.ToString()
+                    })
+            });
+
+            return Ok(doctorDTOs);
         }
     }
 }
