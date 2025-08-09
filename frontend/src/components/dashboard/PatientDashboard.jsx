@@ -14,10 +14,52 @@ const PatientDashboard = () => {
     fetchAppointments();
   }, []);
 
+  const parseTime = (timeSlot) => {
+    const [, endTime] = timeSlot.split('-').map(t => t.trim());
+    const [time, modifier] = endTime.split(' ');
+    let [hours, minutes] = time.split(':').map(Number);
+    if (modifier === 'PM' && hours !== 12) hours += 12;
+    if (modifier === 'AM' && hours === 12) hours = 0;
+    return { hours, minutes };
+  };
+
+  const isExpired = (appointment) => {
+    const now = new Date();
+    const appointmentDate = new Date(appointment.date);
+    const { hours, minutes } = parseTime(appointment.timeSlot);
+    appointmentDate.setHours(hours);
+    appointmentDate.setMinutes(minutes);
+    appointmentDate.setSeconds(0);
+    return appointmentDate < now;
+  };
+
   const fetchAppointments = async () => {
     try {
-      const data = await apiService.getAppointments(user.PatientID);
-      setAppointments(data.slice(0, 3)); // Show only recent 3
+      const data = await apiService.getAppointmentsWithDoctorName(user.patientID);
+      const upcoming = data.filter(appt => !isExpired(appt));
+
+      upcoming.sort((a, b) => {
+        const aDate = new Date(a.date);
+        const bDate = new Date(b.date);
+
+        const aStart = a.timeSlot.split('-')[0].trim();
+        const bStart = b.timeSlot.split('-')[0].trim();
+
+        const getTime = (t) => {
+          let [time, modifier] = t.split(' ');
+          let [hours, minutes] = time.split(':').map(Number);
+          if (modifier === 'PM' && hours !== 12) hours += 12;
+          if (modifier === 'AM' && hours === 12) hours = 0;
+          return hours * 60 + minutes;
+        };
+
+        if (aDate.getTime() === bDate.getTime()) {
+          return getTime(aStart) - getTime(bStart);
+        }
+        return aDate - bDate;
+      });
+
+      setAppointments(upcoming.slice(0, 3));
     } catch (err) {
       setError('Failed to fetch appointments');
     } finally {
@@ -40,7 +82,7 @@ const PatientDashboard = () => {
 
       {/* Quick Actions */}
       <Row className="g-4 mb-5">
-        <Col md={3}>
+        <Col md={4}>
           <Card className="card-hover text-center h-100">
             <Card.Body>
               <div className="mb-3" style={{ fontSize: '2.5rem' }}>🔍</div>
@@ -52,8 +94,8 @@ const PatientDashboard = () => {
             </Card.Body>
           </Card>
         </Col>
-        
-        <Col md={3}>
+
+        <Col md={4}>
           <Card className="card-hover text-center h-100">
             <Card.Body>
               <div className="mb-3" style={{ fontSize: '2.5rem' }}>📅</div>
@@ -65,8 +107,8 @@ const PatientDashboard = () => {
             </Card.Body>
           </Card>
         </Col>
-        
-        <Col md={3}>
+
+        <Col md={4}>
           <Card className="card-hover text-center h-100">
             <Card.Body>
               <div className="mb-3" style={{ fontSize: '2.5rem' }}>💊</div>
@@ -74,19 +116,6 @@ const PatientDashboard = () => {
               <Card.Text>View your digital prescriptions</Card.Text>
               <Button as={Link} to="/prescriptions" variant="outline-primary" size="sm">
                 View All
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        
-        <Col md={3}>
-          <Card className="card-hover text-center h-100">
-            <Card.Body>
-              <div className="mb-3" style={{ fontSize: '2.5rem' }}>💳</div>
-              <Card.Title>Payments</Card.Title>
-              <Card.Text>Manage payment history</Card.Text>
-              <Button as={Link} to="/payments" variant="outline-primary" size="sm">
-                View History
               </Button>
             </Card.Body>
           </Card>
@@ -114,7 +143,7 @@ const PatientDashboard = () => {
                 <Alert variant="danger">{error}</Alert>
               ) : appointments.length === 0 ? (
                 <div className="text-center py-4">
-                  <p className="text-muted mb-3">No appointments found</p>
+                  <p className="text-muted mb-3">No upcoming appointments found</p>
                   <Button as={Link} to="/search-doctors" variant="primary">
                     Book Your First Appointment
                   </Button>
@@ -122,21 +151,21 @@ const PatientDashboard = () => {
               ) : (
                 <div className="row g-3">
                   {appointments.map(appointment => (
-                    <div key={appointment.AppointmentID} className="col-md-4">
+                    <div key={appointment.appointmentID} className="col-md-4">
                       <Card className="appointment-card h-100">
                         <Card.Body>
                           <div className="d-flex justify-content-between align-items-start mb-2">
-                            <h6 className="mb-0">Dr. Smith</h6>
-                            <span className={`badge ${appointment.Status === 'Completed' ? 'bg-success' : 
-                              appointment.Status === 'Booked' ? 'bg-primary' : 'bg-warning'}`}>
-                              {appointment.Status}
+                            <h6 className="mb-0">Dr. {appointment.doctorName}</h6>
+                            <span className={`badge ${appointment.status === 'Completed' ? 'bg-success' :
+                              appointment.status === 'Booked' ? 'bg-primary' : 'bg-warning'}`}>
+                              {appointment.status}
                             </span>
                           </div>
                           <p className="text-muted small mb-2">
-                            📅 {formatDate(appointment.Date)}
+                            📅 {formatDate(appointment.date)}
                           </p>
                           <p className="text-muted small mb-0">
-                            🕐 {appointment.TimeSlot}
+                            🕐 {appointment.timeSlot}
                           </p>
                         </Card.Body>
                       </Card>

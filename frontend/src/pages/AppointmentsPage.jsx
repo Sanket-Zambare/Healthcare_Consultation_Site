@@ -10,7 +10,7 @@ const AppointmentsPage = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('all');
   const [error, setError] = useState('');
-  
+
   const { user } = useAuth();
 
   useEffect(() => {
@@ -22,14 +22,15 @@ const AppointmentsPage = () => {
   }, [appointments, activeTab]);
 
   const fetchAppointments = async () => {
+    setLoading(true);
+    setError('');
     try {
       let data;
       if (user.role === 'patient') {
-        data = await apiService.getAppointments(user.PatientID);
+        data = await apiService.getAppointmentsByPatient(user.patientID);
       } else if (user.role === 'doctor') {
-        data = await apiService.getAppointments(null, user.DoctorID);
+        data = await apiService.getAppointmentsByDoctor(user.doctorID);
       }
-      
       setAppointments(data);
     } catch (err) {
       setError('Failed to fetch appointments');
@@ -40,21 +41,21 @@ const AppointmentsPage = () => {
 
   const filterAppointments = () => {
     let filtered = appointments;
-    
+
     switch (activeTab) {
       case 'upcoming':
-        filtered = appointments.filter(apt => apt.Status === 'Booked');
+        filtered = appointments.filter(apt => apt.status === 'Booked');
         break;
       case 'completed':
-        filtered = appointments.filter(apt => apt.Status === 'Completed');
+        filtered = appointments.filter(apt => apt.status === 'Completed');
         break;
       case 'cancelled':
-        filtered = appointments.filter(apt => apt.Status === 'Cancelled');
+        filtered = appointments.filter(apt => apt.status === 'Cancelled');
         break;
       default:
         filtered = appointments;
     }
-    
+
     setFilteredAppointments(filtered);
   };
 
@@ -92,7 +93,7 @@ const AppointmentsPage = () => {
                 </Nav.Item>
               </Nav>
             </Card.Header>
-            
+
             <Card.Body>
               {loading ? (
                 <div className="text-center py-5">
@@ -103,7 +104,7 @@ const AppointmentsPage = () => {
               ) : error ? (
                 <Alert variant="danger">{error}</Alert>
               ) : (
-                <AppointmentList 
+                <AppointmentList
                   appointments={filteredAppointments}
                   userRole={user.role}
                   onAppointmentUpdate={fetchAppointments}

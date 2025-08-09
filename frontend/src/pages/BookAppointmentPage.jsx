@@ -14,11 +14,17 @@ const BookAppointmentPage = () => {
   const { user } = useAuth();
 
   useEffect(() => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+
+    if (!doctorId) {
+      navigate('/find-doctors');
+      return;
+    }
+
     const fetchDoctor = async () => {
-      if (!doctorId) {
-        navigate('/find-doctors');
-        return;
-      }
       try {
         const doctorData = await apiService.getDoctorById(doctorId);
         setDoctor(doctorData);
@@ -31,7 +37,7 @@ const BookAppointmentPage = () => {
     };
 
     fetchDoctor();
-  }, [doctorId, navigate]);
+  }, [doctorId, navigate, user]);
 
   const formatAvailability = (availability) => {
     if (!availability || availability.length === 0) return 'Not available';
@@ -60,11 +66,6 @@ const BookAppointmentPage = () => {
         <Alert variant="danger">{error}</Alert>
       </Container>
     );
-  }
-
-  if (!user) {
-    navigate('/login');
-    return null;
   }
 
   return (

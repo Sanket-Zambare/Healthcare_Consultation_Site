@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Card, Button, Table, Spinner } from 'react-bootstrap';
+import { Row, Col, Card, Button, Spinner } from 'react-bootstrap';
 import apiService from '../../services/apiService';
 import { useNavigate } from 'react-router-dom';
 
@@ -82,7 +82,7 @@ const AdminDashboard = () => {
         </Col>
       </Row>
 
-      <Row className="g-4 mb-5">
+      <Row className="g-4 mb-5 justify-content-center">
         <Col md={6}>
           <Card className="card-hover h-100 text-center">
             <Card.Body>
@@ -91,18 +91,6 @@ const AdminDashboard = () => {
               <Card.Text>{stats.pendingApprovals} doctors pending</Card.Text>
               <Button size="sm" onClick={() => navigate('/admin/approvals')}>
                 Review Approvals
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={6}>
-          <Card className="card-hover h-100 text-center">
-            <Card.Body>
-              <div style={{ fontSize: '3rem' }}>👤</div>
-              <Card.Title>User Management</Card.Title>
-              <Card.Text>Manage all users in system</Card.Text>
-              <Button size="sm" variant="outline-primary" onClick={() => navigate('/admin/users')}>
-                Manage Users
               </Button>
             </Card.Body>
           </Card>

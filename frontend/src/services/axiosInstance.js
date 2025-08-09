@@ -2,21 +2,26 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: '/api', // Vite proxy redirects to https://localhost:44396
+  baseURL: '/api', // Vite proxy will redirect this
 });
 
-// Request Interceptor to add Authorization header
+// Set default header if token exists on init
+const token = localStorage.getItem('token');
+if (token) {
+  instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
+
+// Request Interceptor to attach token dynamically
 instance.interceptors.request.use(
   (config) => {
     try {
-      const userData = JSON.parse(localStorage.getItem('user'));
-      const token = userData?.token;
+      const token = localStorage.getItem('token'); // ✅ get token directly
 
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
     } catch (error) {
-      console.error('Error parsing user token from localStorage:', error);
+      console.error('Error retrieving token from localStorage:', error);
     }
 
     return config;
@@ -24,14 +29,14 @@ instance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response Interceptor to handle global errors
+// Response Interceptor for 401 handling
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Unauthorized - maybe token expired
-      localStorage.removeItem('user');
-      window.location.href = '/login'; // Force logout
+      localStorage.removeItem('token');
+      localStorage.removeItem('currentUser');
+      window.location.href = '/login'; // Redirect to login
     }
     return Promise.reject(error);
   }

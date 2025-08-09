@@ -20,7 +20,7 @@ namespace ConsultationSite.Controllers
 
         // ===================== PATIENT PROFILE =====================
 
-        [Authorize(Roles = "Admin,Patient")]
+        [Authorize(Roles = "Admin,patient")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPatientById(int id)
         {
@@ -31,7 +31,7 @@ namespace ConsultationSite.Controllers
             return Ok(patient);
         }
 
-        [Authorize(Roles = "Admin,Patient")]
+        [Authorize(Roles = "Admin,patient")]
         [HttpGet("by-name/{name}")]
         public async Task<IActionResult> GetPatientByName(string name)
         {
@@ -50,7 +50,7 @@ namespace ConsultationSite.Controllers
             return Ok(patients);
         }
 
-        [Authorize(Roles = "Patient")]
+        [Authorize(Roles = "patient")]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdatePatient(int id, [FromBody] Patient updatedPatient)
         {
@@ -71,7 +71,7 @@ namespace ConsultationSite.Controllers
             return Ok(patient);
         }
 
-        [Authorize(Roles = "Patient")]
+        [Authorize(Roles = "patient")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeletePatient(int id)
         {
@@ -85,9 +85,23 @@ namespace ConsultationSite.Controllers
             return Ok(new { message = "Patient profile deleted successfully." });
         }
 
+        [AllowAnonymous]
+        [HttpGet("check-email")]
+        public async Task<IActionResult> CheckEmailExists([FromQuery] string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return BadRequest("Email is required");
+
+            bool emailExists = await _context.Patients.AnyAsync(p => p.Email == email);
+
+            return Ok(new { exists = emailExists });
+        }
+
+
+
         // ===================== APPOINTMENTS =====================
 
-        [Authorize(Roles = "Patient")]
+        [Authorize(Roles = "patient")]
         [HttpPost("book-appointment")]
         public async Task<IActionResult> BookAppointment([FromBody] Appointment appointment)
         {
@@ -100,7 +114,7 @@ namespace ConsultationSite.Controllers
             return Ok(new { message = "Appointment booked successfully", appointment });
         }
 
-        [Authorize(Roles = "Patient")]
+        [Authorize(Roles = "patient")]
         [HttpGet("appointments/{patientId}")]
         public async Task<IActionResult> GetAppointmentsByPatient(int patientId)
         {
@@ -112,22 +126,9 @@ namespace ConsultationSite.Controllers
             return Ok(appointments);
         }
 
-        [Authorize(Roles = "Patient")]
-        [HttpGet("appointment/{appointmentId}")]
-        public async Task<IActionResult> GetAppointmentById(int appointmentId)
-        {
-            var appointment = await _context.Appointments
-                .Include(a => a.Doctor)
-                .Include(a => a.Patient)
-                .FirstOrDefaultAsync(a => a.AppointmentID == appointmentId);
+       
 
-            if (appointment == null)
-                return NotFound("Appointment not found");
-
-            return Ok(appointment);
-        }
-
-        [Authorize(Roles = "Patient")]
+        [Authorize(Roles = "patient")]
         [HttpPut("update-appointment/{appointmentId}")]
         public async Task<IActionResult> UpdateAppointment(int appointmentId, [FromBody] Appointment updated)
         {
@@ -144,7 +145,7 @@ namespace ConsultationSite.Controllers
             return Ok(appointment);
         }
 
-        [Authorize(Roles = "Patient")]
+        [Authorize(Roles = "patient")]
         [HttpDelete("cancel-appointment/{appointmentId}")]
         public async Task<IActionResult> CancelAppointment(int appointmentId)
         {

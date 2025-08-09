@@ -1,10 +1,76 @@
-import React from 'react';
-import { Container, Row, Col, Button, Card } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Container, Row, Col, Button, Card, Spinner, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import apiService from '../services/apiService';
+import DoctorCard from '../components/doctor/DoctorCard';
 
 const Home = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
+  const [originalDoctors, setOriginalDoctors] = useState([]);
+  const [doctors, setDoctors] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState({ name: '', specialization: '' });
+
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        const data = await apiService.getDoctors();
+        setOriginalDoctors(data || []);
+        setDoctors(data || []);
+      } catch (error) {
+        console.error('Error fetching doctors:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDoctors();
+  }, []);
+
+  useEffect(() => {
+    applyFilters();
+  }, [filters, originalDoctors]);
+
+  const applyFilters = () => {
+    let filtered = [...originalDoctors];
+
+    if (filters.name.trim()) {
+      const name = filters.name.toLowerCase();
+      filtered = filtered.filter(doc =>
+        (doc.name || doc.Name || '').toLowerCase().includes(name)
+      );
+    }
+
+    if (filters.specialization.trim()) {
+      const spec = filters.specialization.toLowerCase();
+      filtered = filtered.filter(doc =>
+        (doc.specialization || doc.Specialization || '').toLowerCase().includes(spec)
+      );
+    }
+
+    setDoctors(filtered);
+  };
+
+  const handleFilterChange = (e) => {
+    setFilters(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
+
+  const handleClearFilters = () => {
+    setFilters({ name: '', specialization: '' });
+  };
+
+  const specializations = [
+    'All Specializations',
+    'Cardiology', 'Dermatology', 'Neurology', 'Pediatrics', 'Psychiatry',
+    'Orthopedics', 'Gynecology', 'Ophthalmology', 'ENT', 'General Medicine'
+  ];
+
+  const shouldShowFindDoctors = () => {
+    return isAuthenticated && user?.role === 'patient';
+  };
 
   return (
     <>
@@ -22,11 +88,11 @@ const Home = () => {
                 advice through our secure telemedicine platform.
               </p>
               <div className="d-flex gap-3 flex-wrap">
-                {isAuthenticated ? (
+                {shouldShowFindDoctors() ? (
                   <Button as={Link} to="/search-doctors" size="lg" variant="light">
                     Find Doctors
                   </Button>
-                ) : (
+                ) : !isAuthenticated ? (
                   <>
                     <Button as={Link} to="/register-patient" size="lg" variant="light">
                       Book Appointment
@@ -35,7 +101,7 @@ const Home = () => {
                       Login
                     </Button>
                   </>
-                )}
+                ) : null}
               </div>
             </Col>
             <Col lg={6} className="text-center">
@@ -101,8 +167,8 @@ const Home = () => {
         </Row>
       </Container>
 
-      {/* Stats Section */}
-      <section className="bg-light py-5">
+     
+      {/* <section className="bg-light py-5">
         <Container>
           <Row className="text-center">
             <Col md={3} className="mb-4">
@@ -123,7 +189,7 @@ const Home = () => {
             </Col>
           </Row>
         </Container>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
       <Container className="my-5 py-5 text-center">
@@ -146,6 +212,68 @@ const Home = () => {
           </Col>
         </Row>
       </Container>
+
+      {/* All Doctors + Filters Section */}
+      <section className="bg-white py-5">
+        <Container>
+          <h2 className="mb-4 text-center">Meet Our Doctors</h2>
+
+          <Row className="mb-4">
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>Search by Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  placeholder="Enter doctor's name"
+                  value={filters.name}
+                  onChange={handleFilterChange}
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>Filter by Specialization</Form.Label>
+                <Form.Select
+                  name="specialization"
+                  value={filters.specialization}
+                  onChange={handleFilterChange}
+                >
+                  {specializations.map(spec => (
+                    <option key={spec} value={spec === 'All Specializations' ? '' : spec}>
+                      {spec}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+            </Col>
+          </Row>
+
+          {loading ? (
+            <div className="text-center">
+              <Spinner animation="border" variant="primary" />
+            </div>
+          ) : doctors.length === 0 ? (
+            <Card className="text-center py-5">
+              <Card.Body>
+                <h5>No doctors found</h5>
+                <p className="text-muted mb-3">Try adjusting your search or filters.</p>
+                <Button variant="primary" onClick={handleClearFilters}>
+                  Clear Filters
+                </Button>
+              </Card.Body>
+            </Card>
+          ) : (
+            <Row xs={1} sm={2} md={3} lg={4} className="g-4">
+              {doctors.map((doctor, index) => (
+                <Col key={index}>
+                  <DoctorCard doctor={doctor} />
+                </Col>
+              ))}
+            </Row>
+          )}
+        </Container>
+      </section>
     </>
   );
 };

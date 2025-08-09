@@ -1,66 +1,81 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button, Alert } from 'react-bootstrap';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Container, Row, Col, Card, Alert } from 'react-bootstrap';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useApp } from '../context/AppContext';
 import apiService from '../services/apiService';
 import PaymentForm from '../components/payment/PaymentForm';
 
+
 const PaymentsPage = () => {
   const { appointmentId } = useParams();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const doctorId = queryParams.get('doctorId');
+
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const { showToast } = useApp();
+
   const [appointment, setAppointment] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  
-  const { user } = useAuth();
-  const { showToast } = useApp();
-  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+
     if (appointmentId) {
-      fetchAppointment();
+      fetchAppointmentById();
     } else {
       setLoading(false);
     }
-  }, [appointmentId]);
+  }, [appointmentId, user, navigate]);
 
-  const fetchAppointment = async () => {
+  const fetchAppointmentById = async () => {
     try {
-      const appointments = await apiService.getAppointments(user.PatientID);
-      const apt = appointments.find(a => a.AppointmentID === parseInt(appointmentId));
-      
-      if (!apt) {
-        throw new Error('Appointment not found');
-      }
-      
-      setAppointment(apt);
+      const fetchedAppointment = await apiService.getAppointmentById(appointmentId);
+      setAppointment(fetchedAppointment);
     } catch (err) {
-      setError(err.message);
+      console.error('❌ Error fetching appointment:', err);
+      setError(err.message || 'Failed to fetch appointment');
     } finally {
       setLoading(false);
     }
   };
 
-  const handlePaymentSuccess = async (paymentData) => {
+  const handlePaymentSuccess = async (paymentResponse) => {
     try {
-      // Create payment record
-      await apiService.createPayment({
-        AppointmentID: appointment.AppointmentID,
-        Amount: 50, // Consultation fee
+      if (!appointment) {
+        showToast('⚠️ Appointment not found', 'warning');
+        return;
+      }
+
+      const patientId = appointment.patientID; // ✅ Correct casing
+
+      const payload = {
+        AppointmentID: appointment.appointmentID,
+        Amount: 50,
+        EndDate: new Date().toISOString().split("T")[0],
         PaymentMode: 'RazorPay',
-        PatientID: user.PatientID,
-        ...paymentData
-      });
+        RazorpayOrderId: paymentResponse?.razorpay_order_id || 'order_dummy',
+        RazorpayPaymentId: paymentResponse?.razorpay_payment_id || 'pay_dummy',
+        RazorpaySignature: paymentResponse?.razorpay_signature || 'signature_dummy',
+        PatientID: patientId
+      };
 
-      // Update appointment payment status
-      await apiService.updateAppointment(appointment.AppointmentID, {
-        PaymentStatus: 'Paid'
-      });
+      console.log("📤 Sending Payment Payload:", payload);
+      await apiService.createPayment(payload);
 
-      showToast('Payment successful! Your appointment is confirmed.', 'success');
+      await apiService.updatePaymentStatus(appointmentId, "Paid");
+
+      showToast('✅ Payment successful!', 'success');
       navigate('/appointments');
     } catch (err) {
-      showToast('Payment recorded but failed to update appointment. Please contact support.', 'warning');
+      console.error("❌ Payment recording error:", err.message || err);
+      showToast('Payment record failed. Contact support.', 'error');
     }
   };
 
@@ -84,16 +99,10 @@ const PaymentsPage = () => {
     );
   }
 
-  // If no specific appointment, show payment history
-  if (!appointmentId) {
+  if (!appointmentId || !appointment) {
     return (
       <Container className="my-4">
-        <h2 className="fw-bold mb-4">Payment History</h2>
-        <Card>
-          <Card.Body>
-            <p className="text-muted">Payment history will be displayed here.</p>
-          </Card.Body>
-        </Card>
+        <Alert variant="warning">No appointment found for payment.</Alert>
       </Container>
     );
   }
@@ -109,14 +118,15 @@ const PaymentsPage = () => {
             <Card.Body>
               <div className="mb-4">
                 <h6>Appointment Details</h6>
-                <p className="mb-1"><strong>Date:</strong> {appointment.Date}</p>
-                <p className="mb-1"><strong>Time:</strong> {appointment.TimeSlot}</p>
-                <p className="mb-1"><strong>Doctor:</strong> Dr. Smith</p>
-                <p className="mb-0"><strong>Consultation Fee:</strong> $50.00</p>
+                <p className="mb-1"><strong>Date:</strong> {new Date(appointment?.date).toLocaleDateString()}</p>
+                <p className="mb-1"><strong>Time:</strong> {appointment?.timeSlot}</p>
+                <p className="mb-1"><strong>Doctor:</strong> {appointment?.doctorName}</p>
+                <p className="mb-1"><strong>Patient:</strong> {appointment?.patientName}</p> {/* ✅ NEW LINE */}
+                <p className="mb-0"><strong>Consultation Fee:</strong> ₹500.00</p>
               </div>
-              
-              <PaymentForm 
-                amount={50}
+
+              <PaymentForm
+                amount={500}
                 appointment={appointment}
                 onSuccess={handlePaymentSuccess}
               />
@@ -129,3 +139,4 @@ const PaymentsPage = () => {
 };
 
 export default PaymentsPage;
+

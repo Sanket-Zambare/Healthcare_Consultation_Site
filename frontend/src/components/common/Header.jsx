@@ -55,7 +55,7 @@ const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
-            <Nav.Link as={Link} to="/">About</Nav.Link>
+            {/* <Nav.Link as={Link} to="/">About</Nav.Link> */}
             <Nav.Link as="a" href="#contact">Contact</Nav.Link>
             {isAuthenticated && (
               <>
@@ -70,7 +70,7 @@ const Header = () => {
                 {user.role === 'doctor' && (
                   <>
                     <Nav.Link as={Link} to="/appointments">Appointments</Nav.Link>
-                    <Nav.Link as={Link} to="/availability">Availability</Nav.Link>
+                    {/* <Nav.Link as={Link} to="/availability">Availability</Nav.Link> */}
                     <Nav.Link as={Link} to="/prescriptions">Prescriptions</Nav.Link>
                   </>
                 )}
@@ -79,7 +79,7 @@ const Header = () => {
           </Nav>
           
           <Nav className="align-items-center">
-            <DarkModeToggle />
+            {/* <DarkModeToggle /> */}
             {isAuthenticated ? (
               <Dropdown align="end">
                 <Dropdown.Toggle variant="primary" id="user-dropdown">

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ConsultationSite.Models
 {
@@ -25,12 +26,14 @@ namespace ConsultationSite.Models
         [Required]
         public int DoctorID { get; set; }
 
+        [JsonIgnore]
         [ForeignKey("DoctorID")]
         public Doctor? Doctor { get; set; }
 
         [Required]
         public int PatientID { get; set; }
 
+        [JsonIgnore]
         [ForeignKey("PatientID")]
         public Patient? Patient { get; set; }
 

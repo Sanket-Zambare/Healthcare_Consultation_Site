@@ -13,74 +13,77 @@ const PaymentForm = ({ amount, appointment, onSuccess }) => {
     setError('');
 
     try {
-      // Mock RazorPay integration
-      await mockRazorPayPayment();
-      
+      // 🔁 Simulate Razorpay payment gateway
+      await simulateRazorPay();
+
+      const timestamp = Date.now();
+
       const paymentData = {
-        RazorPayOrderID: `order_${Date.now()}`,
-        RazorPaymentID: `pay_${Date.now()}`,
-        RazorPaysignature: `signature_${Date.now()}`,
-        Status: 'Completed'
+        razorpay_order_id: `order_${timestamp}`,
+        razorpay_payment_id: `pay_${timestamp}`,
+        razorpay_signature: `signature_${timestamp}`,
+        status: 'Completed'
       };
 
+      // ✅ Trigger success callback
       onSuccess(paymentData);
     } catch (err) {
+      console.error('❌ Payment failed:', err);
       setError('Payment failed. Please try again.');
     } finally {
       setProcessing(false);
     }
   };
 
-  const mockRazorPayPayment = () => {
+  // 🧪 Simulate payment delay
+  const simulateRazorPay = () => {
     return new Promise((resolve) => {
-      // Simulate payment processing
-      setTimeout(() => {
-        resolve();
-      }, 2000);
+      setTimeout(() => resolve(), 2000);
     });
   };
 
   return (
     <Form onSubmit={handlePayment}>
       {error && <Alert variant="danger">{error}</Alert>}
-      
-      <Card className="mb-4">
+
+      <Card className="mb-4 shadow-sm">
         <Card.Body>
-          <h6 className="mb-3">Payment Summary</h6>
+          <h6 className="mb-3 fw-bold">Payment Summary</h6>
+
           <div className="d-flex justify-content-between mb-2">
             <span>Consultation Fee</span>
-            <span>${amount.toFixed(2)}</span>
+            <span>₹{amount?.toFixed(2)}</span>
           </div>
+
           <div className="d-flex justify-content-between mb-2">
             <span>Platform Fee</span>
-            <span>$0.00</span>
+            <span>₹0.00</span>
           </div>
+
           <hr />
+
           <div className="d-flex justify-content-between fw-bold">
             <span>Total Amount</span>
-            <span>${amount.toFixed(2)}</span>
+            <span>₹{amount?.toFixed(2)}</span>
           </div>
         </Card.Body>
       </Card>
 
       <Form.Group className="mb-4">
-        <Form.Label>Payment Method</Form.Label>
-        <div>
-          <Form.Check
-            type="radio"
-            id="razorpay"
-            name="paymentMethod"
-            value="razorpay"
-            checked={paymentMethod === 'razorpay'}
-            onChange={(e) => setPaymentMethod(e.target.value)}
-            label="RazorPay (Cards, UPI, Net Banking)"
-          />
-        </div>
+        <Form.Label className="fw-semibold">Payment Method</Form.Label>
+        <Form.Check
+          type="radio"
+          id="razorpay"
+          name="paymentMethod"
+          value="razorpay"
+          label="RazorPay (Cards, UPI, Net Banking)"
+          checked={paymentMethod === 'razorpay'}
+          onChange={(e) => setPaymentMethod(e.target.value)}
+        />
       </Form.Group>
 
       <Alert variant="info" className="small">
-        <strong>Secure Payment:</strong> Your payment information is encrypted and secure. 
-        You will be redirected to RazorPay's secure payment gateway.
+        🔒 <strong>Secure Payment:</strong> You will be redirected to RazorPay's secure payment gateway.
       </Alert>
 
       <Button
@@ -96,13 +99,13 @@ const PaymentForm = ({ amount, appointment, onSuccess }) => {
             Processing Payment...
           </>
         ) : (
-          `Pay $${amount.toFixed(2)}`
+          `Pay ₹${amount?.toFixed(2)}`
         )}
       </Button>
 
       <div className="text-center mt-3">
         <small className="text-muted">
-          By proceeding, you agree to our Terms & Conditions
+          By proceeding, you agree to our <a href="/terms">Terms & Conditions</a>.
         </small>
       </div>
     </Form>

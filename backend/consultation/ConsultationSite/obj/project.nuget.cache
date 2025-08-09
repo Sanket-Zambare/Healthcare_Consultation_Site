@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "Aqqp0dfQNFs=",
+  "dgSpecHash": "A+5HZUC+eCc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\ConsultationSite.csproj",
+  "projectFilePath": "C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\ConsultationSite.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ASUS\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\humanizer.core.af\\2.14.1\\humanizer.core.af.2.14.1.nupkg.sha512",

@@ -1,9 +1,11 @@
 ﻿using ConsultationSite.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
+using ConsultationSite.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Security.Claims;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace ConsultationSite
@@ -62,10 +64,14 @@ namespace ConsultationSite
                     ValidIssuer = jwtSettings["Issuer"],
                     ValidAudience = jwtSettings["Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ClockSkew = TimeSpan.Zero
+                    ClockSkew = TimeSpan.Zero,
+
+                    // ✅ Explicit hardcoded role claim type (same as ClaimTypes.Role)
+                    RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
                 };
             });
 
+           
             // ✅ Swagger with JWT support
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
@@ -104,6 +110,7 @@ namespace ConsultationSite
             });
 
             var app = builder.Build();
+            app.UseMiddleware<TokenLoggingMiddleware>(); //setting MiddleWare
 
             // ✅ Middleware
             if (app.Environment.IsDevelopment())

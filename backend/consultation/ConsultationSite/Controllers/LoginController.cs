@@ -28,19 +28,29 @@ namespace ConsultationSite.Controllers
             switch (model.Role?.ToLower())
             {
                 case "admin":
-                    user = await _context.Admins
-                        .FirstOrDefaultAsync(a => a.Email == model.Email && a.Password == model.Password);
+                    var admin = await _context.Admins.FirstOrDefaultAsync(a => a.Email == model.Email);
+                    if (admin != null && BCrypt.Net.BCrypt.Verify(model.Password, admin.Password))
+                    {
+                        user = admin;
+                    }
                     break;
 
                 case "doctor":
-                    user = await _context.Doctors
-                        .FirstOrDefaultAsync(d => d.Email == model.Email && d.Password == model.Password);
+                    var doctor = await _context.Doctors.FirstOrDefaultAsync(d => d.Email == model.Email);
+                    if (doctor != null && BCrypt.Net.BCrypt.Verify(model.Password, doctor.Password))
+                    {
+                        user = doctor;
+                    }
                     break;
 
                 case "patient":
-                    user = await _context.Patients
-                        .FirstOrDefaultAsync(p => p.Email == model.Email && p.Password == model.Password);
+                    var patient = await _context.Patients.FirstOrDefaultAsync(p => p.Email == model.Email);
+                    if (patient != null && BCrypt.Net.BCrypt.Verify(model.Password, patient.Password))
+                    {
+                        user = patient;
+                    }
                     break;
+
             }
 
             if (user == null)

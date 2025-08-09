@@ -21,6 +21,21 @@ const SearchDoctorsPage = () => {
   }, [filters, originalDoctors]);
 
   const fetchDoctors = async () => {
+
+  //   const rawUser = localStorage.getItem('currentUser');
+  // const token = localStorage.getItem('token'); // ✅ get token directly
+
+  // console.log("🔍 Raw localStorage user:", rawUser);
+  // console.log("📦 Token before fetching doctors:", token);
+
+  // let userData = null;
+
+  // try {
+  //   userData = JSON.parse(rawUser);
+  // } catch (error) {
+  //   console.error("❌ Failed to parse user:", error);
+  // }
+
     try {
       const data = await apiService.getDoctors();
       console.log('Fetched doctors:', data);

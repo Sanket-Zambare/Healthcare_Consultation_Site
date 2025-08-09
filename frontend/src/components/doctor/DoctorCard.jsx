@@ -34,9 +34,9 @@ const DoctorCard = ({ doctor }) => {
   return (
     <Card className="doctor-card card-hover h-100">
       <Card.Body className="text-center">
-        {/* Doctor Name */}
+        
         <Card.Title className="h5 mb-2">
-          {doctor.name || doctor.Name || 'Dr. Unknown'}
+          Dr. {doctor.name || doctor.Name || 'Dr. Unknown'}
         </Card.Title>
 
         {/* Specialization */}
@@ -75,14 +75,14 @@ const DoctorCard = ({ doctor }) => {
           >
             Book Appointment
           </Button>
-          <Button
+          {/* <Button
             as={Link}
             to={`/doctor-profile/${doctor.doctorID || doctor.DoctorID}`}
             variant="outline-primary"
             size="sm"
           >
             View Profile
-          </Button>
+          </Button> */}
         </div>
       </Card.Body>
     </Card>

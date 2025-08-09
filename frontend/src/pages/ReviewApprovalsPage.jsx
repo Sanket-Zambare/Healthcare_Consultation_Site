@@ -22,8 +22,12 @@ const ReviewApprovals = () => {
 
   const approveDoctor = async (id) => {
     try {
+      // Find the doctor name before approval
+      const doctor = pendingDoctors.find(doc => doc.doctorID === id);
+      const doctorName = doctor ? doctor.name : 'Unknown Doctor';
+      
       await apiService.approveDoctor(id);
-      setMessage(`Doctor #${id} approved successfully.`);
+      setMessage(`Dr. ${doctorName} approved successfully.`);
       fetchPendingDoctors();
     } catch (err) {
       console.error('Approval failed', err);

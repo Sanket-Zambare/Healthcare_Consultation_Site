@@ -30,8 +30,7 @@ namespace ConsultationSite.Models
         public DateTime DateIssued { get; set; }
 
         [Required]
-        public string? MedicationDetails { get; set; }  // Use string for simplicity
+        public string? MedicationDetails { get; set; }
 
-        public string? FilePath { get; set; } // Optional: store path to uploaded prescription (PDF)
     }
 }

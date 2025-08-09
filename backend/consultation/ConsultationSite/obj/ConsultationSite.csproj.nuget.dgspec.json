@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\ConsultationSite.csproj": {}
+    "C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\ConsultationSite.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\ConsultationSite.csproj": {
+    "C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\ConsultationSite.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\ConsultationSite.csproj",
+        "projectUniqueName": "C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\ConsultationSite.csproj",
         "projectName": "ConsultationSite",
-        "projectPath": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\ConsultationSite.csproj",
+        "projectPath": "C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\ConsultationSite.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\obj\\",
+        "outputPath": "C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -50,6 +50,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[8.0.17, )"

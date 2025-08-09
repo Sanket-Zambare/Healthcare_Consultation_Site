@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Alert } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { Container, Row, Col, Card, Alert, Button } from 'react-bootstrap';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import apiService from '../services/apiService';
 import ChatWindow from '../components/chat/ChatWindow';
@@ -8,74 +8,80 @@ import ChatWindow from '../components/chat/ChatWindow';
 const ChatPage = () => {
   const { appointmentId } = useParams();
   const [appointment, setAppointment] = useState(null);
-  const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [chatActive, setChatActive] = useState(true);
   
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchAppointmentAndMessages();
+    fetchAppointmentDetails();
   }, [appointmentId]);
 
-  const fetchAppointmentAndMessages = async () => {
+  const fetchAppointmentDetails = async () => {
     try {
+      setLoading(true);
+      setError('');
+
       // Fetch appointment details
-      let appointments;
-      if (user.role === 'patient') {
-        appointments = await apiService.getAppointments(user.PatientID);
-      } else {
-        appointments = await apiService.getAppointments(null, user.DoctorID);
-      }
+      const appointmentData = await apiService.getAppointmentById(parseInt(appointmentId));
       
-      const apt = appointments.find(a => a.AppointmentID === parseInt(appointmentId));
-      if (!apt) {
+      if (!appointmentData) {
         throw new Error('Appointment not found');
       }
+
+      // Verify user has access to this appointment
+      console.log('🔍 Access Control Debug:', {
+        userRole: user.role,
+        userPatientID: user.PatientID,
+        userDoctorID: user.DoctorID,
+        appointmentPatientID: appointmentData.patientID,
+        appointmentDoctorID: appointmentData.doctorID,
+        user: user
+      });
+
+      // Verify user has access to this appointment
+      if (user.role === 'patient') {
+        const userPatientID = user.PatientID || user.patientID || user.patientId;
+        if (appointmentData.patientID !== userPatientID) {
+          throw new Error('You do not have access to this appointment');
+        }
+      }
       
-      setAppointment(apt);
+      if (user.role === 'doctor') {
+        const userDoctorID = user.DoctorID || user.doctorID || user.doctorId;
+        if (appointmentData.doctorID !== userDoctorID) {
+          throw new Error('You do not have access to this appointment');
+        }
+      }
+
+      setAppointment(appointmentData);
+      
+      // Check if chat should be active
+      const isToday = new Date(appointmentData.date).toDateString() === new Date().toDateString();
+      const isPaid = appointmentData.paymentStatus === 'Paid';
+      const isBooked = appointmentData.status === 'Booked';
       
       // Check if chat should be active (only during appointment time and if paid)
-      const isToday = apt.Date === new Date().toISOString().split('T')[0];
-      const isPaid = apt.PaymentStatus === 'Paid';
-      setChatActive(isToday && isPaid);
-      
-      // Fetch messages
-      const messageData = await apiService.getMessages(parseInt(appointmentId));
-      setMessages(messageData);
+      setChatActive(isToday && isPaid && isBooked);
       
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Failed to load appointment details');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSendMessage = async (content) => {
+  const handleEndConsultation = async () => {
     try {
-      const messageData = {
-        SenderID: user.role === 'patient' ? user.PatientID : user.DoctorID,
-        ReceiverID: user.role === 'patient' ? appointment.DoctorID : appointment.PatientID,
-        AppointmentID: parseInt(appointmentId),
-        Content: content
-      };
-      
-      const newMessage = await apiService.sendMessage(messageData);
-      setMessages(prev => [...prev, newMessage]);
-    } catch (err) {
-      console.error('Failed to send message:', err);
-    }
-  };
-
-  const handleEndChat = async () => {
-    try {
-      await apiService.updateAppointment(parseInt(appointmentId), {
-        Status: 'Completed'
-      });
+      await apiService.updateAppointmentStatus(parseInt(appointmentId), 'Completed');
       setChatActive(false);
+      // Refresh appointment data
+      await fetchAppointmentDetails();
     } catch (err) {
-      console.error('Failed to end chat:', err);
+      console.error('Failed to end consultation:', err);
+      setError('Failed to end consultation');
     }
   };
 
@@ -94,7 +100,27 @@ const ChatPage = () => {
   if (error) {
     return (
       <Container className="my-4">
-        <Alert variant="danger">{error}</Alert>
+        <Alert variant="danger">
+          <Alert.Heading>Error</Alert.Heading>
+          <p>{error}</p>
+          <Button variant="outline-danger" onClick={() => navigate('/appointments')}>
+            Back to Appointments
+          </Button>
+        </Alert>
+      </Container>
+    );
+  }
+
+  if (!appointment) {
+    return (
+      <Container className="my-4">
+        <Alert variant="warning">
+          <Alert.Heading>Appointment Not Found</Alert.Heading>
+          <p>The requested appointment could not be found.</p>
+          <Button variant="outline-warning" onClick={() => navigate('/appointments')}>
+            Back to Appointments
+          </Button>
+        </Alert>
       </Container>
     );
   }
@@ -103,12 +129,19 @@ const ChatPage = () => {
     return (
       <Container className="my-4">
         <Alert variant="warning">
-          <h5>Chat Not Available</h5>
+          <Alert.Heading>Chat Not Available</Alert.Heading>
           <p>
-            {appointment.Status === 'Completed' 
+            {appointment.status === 'Completed' 
               ? 'This consultation has been completed.' 
-              : 'Chat is only available during your appointment time and after payment confirmation.'}
+              : appointment.status === 'Cancelled'
+              ? 'This appointment has been cancelled.'
+              : appointment.paymentStatus !== 'Paid'
+              ? 'Please complete payment to start the consultation.'
+              : 'Chat is only available during your appointment time.'}
           </p>
+          <Button variant="outline-warning" onClick={() => navigate('/appointments')}>
+            Back to Appointments
+          </Button>
         </Alert>
       </Container>
     );
@@ -126,27 +159,28 @@ const ChatPage = () => {
                     Consultation Chat
                   </h5>
                   <small>
-                    {user.role === 'patient' ? 'Dr. Smith' : `Patient #${appointment.PatientID}`} • 
-                    {appointment.Date} • {appointment.TimeSlot}
+                    {user.role === 'patient' 
+                      ? `Dr. ${appointment.doctorName || 'Doctor'}` 
+                      : `Patient ${appointment.patientName || 'Patient'}`} • 
+                    {new Date(appointment.date).toLocaleDateString()} • {appointment.timeSlot}
                   </small>
                 </div>
                 {user.role === 'doctor' && chatActive && (
-                  <button 
-                    className="btn btn-outline-light btn-sm"
-                    onClick={handleEndChat}
+                  <Button 
+                    variant="outline-light" 
+                    size="sm"
+                    onClick={handleEndConsultation}
                   >
                     End Consultation
-                  </button>
+                  </Button>
                 )}
               </div>
             </Card.Header>
             
             <Card.Body className="p-0">
               <ChatWindow 
-                messages={messages}
-                currentUserId={user.role === 'patient' ? user.PatientID : user.DoctorID}
-                onSendMessage={handleSendMessage}
-                chatActive={chatActive}
+                appointmentId={parseInt(appointmentId)}
+                appointment={appointment}
               />
             </Card.Body>
           </Card>

@@ -31,7 +31,7 @@ namespace ConsultationSite.Controllers
             return Ok(appointments);
         }
 
-        [Authorize(Roles = "Doctor")]
+        [Authorize(Roles = "doctor")]
         [HttpGet("appointmentById/{appointmentId}")]
         public async Task<IActionResult> GetAppointmentById(int appointmentId)
         {
@@ -44,7 +44,7 @@ namespace ConsultationSite.Controllers
             return Ok(appointment);
         }
 
-        [Authorize(Roles = "Doctor")]
+        [Authorize(Roles = "doctor")]
         [HttpPut("updateAppointment/{appointmentId}")]
         public async Task<IActionResult> UpdateAppointment(int appointmentId, [FromBody] Appointment updated)
         {
@@ -61,7 +61,7 @@ namespace ConsultationSite.Controllers
             return Ok(appointment);
         }
 
-        [Authorize(Roles = "Doctor")]
+        [Authorize(Roles = "doctor")]
         [HttpDelete("cancelAppointment/{appointmentId}")]
         public async Task<IActionResult> CancelAppointment(int appointmentId)
         {
@@ -76,7 +76,7 @@ namespace ConsultationSite.Controllers
 
         // ===================== DOCTOR PROFILE =====================
 
-        [Authorize(Roles = "Doctor")]
+        [Authorize(Roles = "doctor")]
         [HttpGet("profile/{doctorId}")]
         public async Task<IActionResult> GetDoctorProfile(int doctorId)
         {
@@ -87,7 +87,7 @@ namespace ConsultationSite.Controllers
             return Ok(doctor);
         }
 
-        [Authorize(Roles = "Doctor")]
+        [Authorize(Roles = "doctor")]
         [HttpPut("updateProfile/{doctorId}")]
         public async Task<IActionResult> UpdateDoctorProfile(int doctorId, [FromBody] Doctor updatedDoctor)
         {
@@ -141,6 +141,19 @@ namespace ConsultationSite.Controllers
             return Ok(doctorDTO);
         }
 
+        [AllowAnonymous]
+        [HttpGet("check-email")]
+        public async Task<IActionResult> CheckDoctorEmailExists([FromQuery] string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return BadRequest("Email is required");
+
+            bool emailExists = await _context.Doctors.AnyAsync(d => d.Email == email);
+
+            return Ok(new { exists = emailExists });
+        }
+
+
 
         // ===================== GENERAL DOCTOR LOOKUP =====================
 
@@ -174,7 +187,7 @@ namespace ConsultationSite.Controllers
             return Ok(doctorDTOs);
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "patient,doctor,Admin")]
         [HttpGet("doctorByName/{name}")]
         public async Task<IActionResult> GetDoctorByName(string name)
         {
@@ -204,5 +217,73 @@ namespace ConsultationSite.Controllers
 
             return Ok(doctorDTOs);
         }
+
+        //==================Availability======================
+
+
+        [Authorize(Roles = "doctor")]
+        [HttpPut("updateAvailability/{doctorId}")]
+        public async Task<IActionResult> UpdateAvailability(int doctorId, [FromBody] List<DoctorAvailability> availabilityList)
+        {
+            var doctor = await _context.Doctors
+                .Include(d => d.Availabilities)
+                .FirstOrDefaultAsync(d => d.DoctorID == doctorId);
+
+            if (doctor == null)
+                return NotFound("Doctor not found");
+
+            foreach (var updated in availabilityList)
+            {
+                if (updated.From >= updated.To)
+                    return BadRequest($"Invalid time range for day {updated.Day}");
+
+                var existing = doctor.Availabilities
+                    .FirstOrDefault(a => a.Day == updated.Day);
+
+                if (existing != null)
+                {
+                    // Only update From and To times
+                    existing.From = updated.From;
+                    existing.To = updated.To;
+                }
+                else
+                {
+                    // Add new availability for the day
+                    doctor.Availabilities.Add(new DoctorAvailability
+                    {
+                        DoctorID = doctorId,
+                        Day = updated.Day,
+                        From = updated.From,
+                        To = updated.To
+                    });
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            return Ok(new { message = "Availability updated successfully." });
+        }
+
+
+
+        [Authorize(Roles = "doctor")]
+        [HttpGet("getAvailability/{doctorId}")]
+        public async Task<IActionResult> GetAvailability(int doctorId)
+        {
+            var availability = await _context.DoctorAvailabilities
+                .Where(a => a.DoctorID == doctorId)
+                .ToListAsync();
+
+            var result = availability.Select(a => new
+            {
+                Day = a.Day.ToString(),
+                From = a.From.ToString("hh\\:mm"),
+                To = a.To.ToString("hh\\:mm"),
+                Status = a.Status.ToString()
+            });
+
+
+            return Ok(result);
+        }
     }
 }
+

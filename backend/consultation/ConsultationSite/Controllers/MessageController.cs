@@ -26,8 +26,21 @@ namespace ConsultationSite.Controllers
                 .ToListAsync();
         }
 
-        //Get Messages
-        [HttpGet("{id}")]
+        //Get Messages by Appointment ID
+        [HttpGet("{appointmentId}")]
+        public async Task<ActionResult<IEnumerable<Message>>> GetMessagesByAppointment(int appointmentId)
+        {
+            var messages = await _context.Messages
+                .Include(m => m.Appointment)
+                .Where(m => m.AppointmentID == appointmentId)
+                .OrderBy(m => m.Timestamp)
+                .ToListAsync();
+
+            return messages;
+        }
+
+        //Get Single Message
+        [HttpGet("single/{id}")]
         public async Task<ActionResult<Message>> GetMessage(int id)
         {
             var message = await _context.Messages
@@ -35,7 +48,7 @@ namespace ConsultationSite.Controllers
                 .FirstOrDefaultAsync(m => m.MessageID == id);
 
             if (message == null)
-                return NotFound(); // ✅ Now this works
+                return NotFound();
 
             return message;
         }

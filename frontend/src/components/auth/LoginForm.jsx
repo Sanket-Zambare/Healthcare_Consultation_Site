@@ -25,40 +25,49 @@ const LoginForm = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  setError('');
 
-    try {
-      await login(formData.email, formData.password, formData.role);
-      showToast('Login successful!', 'success');
-      
-      // Redirect based on role
-      switch (formData.role) {
-        case 'patient':
-          navigate('/patient-dashboard');
-          break;
-        case 'doctor':
-          navigate('/doctor-dashboard');
-          break;
-        case 'admin':
-          navigate('/admin-dashboard');
-          break;
-        default:
-          navigate('/');
-      }
-    } catch (err) {
-      setError(err.message);
-      showToast(err.message, 'error');
-    } finally {
-      setLoading(false);
+  try {
+    await login(formData.email, formData.password, formData.role);
+    showToast('Login successful!', 'success');
+
+    switch (formData.role) {
+      case 'patient':
+        navigate('/patient-dashboard');
+        break;
+      case 'doctor':
+        navigate('/doctor-dashboard');
+        break;
+      case 'admin':
+        navigate('/admin-dashboard');
+        break;
+      default:
+        navigate('/');
     }
-  };
+  } catch (err) {
+    const message = "Please enter correct credentials";
+    setError(message);
+
+    setTimeout(() => {
+      setError('');
+    }, 5000); // auto-close after 5 seconds
+  } finally {
+    setLoading(false);
+  }
+};
+
+
 
   return (
     <Form onSubmit={handleSubmit}>
-      {error && <Alert variant="danger">{error}</Alert>}
+      {error && (
+        <Alert variant="danger" dismissible onClose={() => setError('')}>
+          <strong>⚠️ Error:</strong> {error}
+        </Alert>
+      )}
       
       <Form.Group className="mb-3">
         <Form.Label>Login As</Form.Label>
@@ -120,16 +129,6 @@ const LoginForm = () => {
             Register as Doctor
           </Link>
         </p>
-      </div>
-
-      {/* Demo Credentials */}
-      <div className="mt-4 p-3 bg-light rounded">
-        <small className="text-muted">
-          <strong>Demo Credentials:</strong><br/>
-          Patient: patient@test.com / password<br/>
-          Doctor: doctor@test.com / password<br/>
-          Admin: admin@test.com / password
-        </small>
       </div>
     </Form>
   );

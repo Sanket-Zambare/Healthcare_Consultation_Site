@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import apiService from '../../services/apiService';
 
-
 const DoctorDashboard = () => {
   const { user } = useAuth();
   const [appointments, setAppointments] = useState([]);
@@ -12,134 +11,101 @@ const DoctorDashboard = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetchTodayAppointments();
+    fetchDashboardData();
   }, []);
 
-  const fetchTodayAppointments = async () => {
+  const fetchDashboardData = async () => {
     try {
-      const today = new Date().toISOString().split('T')[0];
-      const data = await apiService.getAppointments(null, user.DoctorID);
-      const todayAppointments = data.filter(apt => apt.Date === today);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const allAppointments = await apiService.getBookedAppointmentsByDoctor(user.doctorID);
+
+      const todayAppointments = allAppointments.filter((apt) => {
+        const aptDate = new Date(apt.date);
+        aptDate.setHours(0, 0, 0, 0);
+        return aptDate.getTime() === today.getTime();
+      });
+
       setAppointments(todayAppointments);
     } catch (err) {
-      setError('Failed to fetch appointments');
+      console.error(err);
+      setError('Failed to fetch dashboard data');
     } finally {
       setLoading(false);
     }
   };
 
-  const formatTime = (timeSlot) => {
-    return timeSlot.split(' - ')[0];
+  const parseTime = (timeStr) => {
+    const [time, modifier] = timeStr.split(' ');
+    let [hours, minutes] = time.split(':').map(Number);
+    if (modifier === 'PM' && hours !== 12) hours += 12;
+    if (modifier === 'AM' && hours === 12) hours = 0;
+    return [hours, minutes];
+  };
+
+  const isCurrentAppointmentSlot = (appointment) => {
+    if (!appointment.date || !appointment.timeSlot) return false;
+
+    const now = new Date();
+    const isoDateOnly = appointment.date.split('T')[0];
+    const [year, month, day] = isoDateOnly.split('-').map(Number);
+
+    const [startRaw, endRaw] = appointment.timeSlot.split(' - ').map(t => t.trim());
+    const [startH, startM] = parseTime(startRaw);
+    const [endH, endM] = parseTime(endRaw);
+
+    const startDateTime = new Date(year, month - 1, day, startH, startM);
+    const endDateTime = new Date(year, month - 1, day, endH, endM);
+
+    return now >= startDateTime && now <= endDateTime;
+  };
+
+  const canStartChat = (appointment) => {
+    return appointment.status === 'Booked' && isCurrentAppointmentSlot(appointment);
   };
 
   return (
     <>
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div>
-          <h2 className="fw-bold">Welcome, {user.Name}!</h2>
+          <h2 className="fw-bold">Welcome, {user.name}!</h2>
           <p className="text-muted">Manage your practice and patient consultations</p>
         </div>
       </div>
 
-      {/* Stats Cards */}
       <Row className="g-4 mb-5">
-        <Col md={3}>
-          <Card className="dashboard-stats h-100">
-            <Card.Body className="text-center">
-              <div className="mb-2" style={{ fontSize: '2rem' }}>📅</div>
-              <h4 className="mb-0">{appointments.length}</h4>
-              <small>Today's Appointments</small>
-            </Card.Body>
-          </Card>
-        </Col>
-        
-        <Col md={3}>
-          <Card className="dashboard-stats h-100">
-            <Card.Body className="text-center">
-              <div className="mb-2" style={{ fontSize: '2rem' }}>👥</div>
-              <h4 className="mb-0">25</h4>
-              <small>Total Patients</small>
-            </Card.Body>
-          </Card>
-        </Col>
-        
-        <Col md={3}>
-          <Card className="dashboard-stats h-100">
-            <Card.Body className="text-center">
-              <div className="mb-2" style={{ fontSize: '2rem' }}>💊</div>
-              <h4 className="mb-0">12</h4>
-              <small>Prescriptions Issued</small>
-            </Card.Body>
-          </Card>
-        </Col>
-        
-        <Col md={3}>
-          <Card className="dashboard-stats h-100">
-            <Card.Body className="text-center">
-              <div className="mb-2" style={{ fontSize: '2rem' }}>⭐</div>
-              <h4 className="mb-0">4.8</h4>
-              <small>Patient Rating</small>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-
-      {/* Quick Actions */}
-      <Row className="g-4 mb-5">
-        <Col md={3}>
+        <Col md={4}>
           <Card className="card-hover text-center h-100">
             <Card.Body>
               <div className="mb-3" style={{ fontSize: '2.5rem' }}>📋</div>
               <Card.Title>All Appointments</Card.Title>
               <Card.Text>View and manage appointments</Card.Text>
-              <Button as={Link} to="/appointments" variant="primary" size="sm">
-                View All
-              </Button>
+              <Button as={Link} to="/appointments" variant="primary" size="sm">View All</Button>
             </Card.Body>
           </Card>
         </Col>
-        
-        <Col md={3}>
+        {/* <Col md={4}>
           <Card className="card-hover text-center h-100">
             <Card.Body>
               <div className="mb-3" style={{ fontSize: '2.5rem' }}>⏰</div>
               <Card.Title>Availability</Card.Title>
               <Card.Text>Set your available hours</Card.Text>
-              <Button as={Link} to="/availability" variant="outline-primary" size="sm">
-                Manage
-              </Button>
+              <Button as={Link} to="/availability" variant="outline-primary" size="sm">Manage</Button>
             </Card.Body>
           </Card>
-        </Col>
-        
-        <Col md={3}>
-          <Card className="card-hover text-center h-100">
-            <Card.Body>
-              <div className="mb-3" style={{ fontSize: '2.5rem' }}>💊</div>
-              <Card.Title>Prescriptions</Card.Title>
-              <Card.Text>Create and manage prescriptions</Card.Text>
-              <Button as={Link} to="/prescriptions" variant="outline-primary" size="sm">
-                Manage
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        
-        <Col md={3}>
+        </Col> */}
+        <Col md={4}>
           <Card className="card-hover text-center h-100">
             <Card.Body>
               <div className="mb-3" style={{ fontSize: '2.5rem' }}>👤</div>
               <Card.Title>Profile</Card.Title>
               <Card.Text>Update your profile information</Card.Text>
-              <Button as={Link} to="/profile" variant="outline-primary" size="sm">
-                Edit Profile
-              </Button>
+              <Button as={Link} to="/profile" variant="outline-primary" size="sm">Edit Profile</Button>
             </Card.Body>
           </Card>
         </Col>
       </Row>
 
-      {/* Today's Appointments */}
       <Row>
         <Col>
           <Card>
@@ -162,49 +128,27 @@ const DoctorDashboard = () => {
               ) : (
                 <div className="row g-3">
                   {appointments.map(appointment => (
-                    <div key={appointment.AppointmentID} className="col-md-6">
+                    <div key={appointment.appointmentID} className="col-md-6">
                       <Card className="appointment-card">
                         <Card.Body>
                           <div className="d-flex justify-content-between align-items-start mb-3">
                             <div>
-                              <h6 className="mb-1">Patient #{appointment.PatientID}</h6>
-                              <p className="text-muted small mb-0">
-                                🕐 {appointment.TimeSlot}
-                              </p>
+                              <h6 className="mb-1">{appointment.patientName}</h6>
+                              <p className="text-muted small mb-0">🕐 {appointment.timeSlot}</p>
                             </div>
-                            <Badge bg={appointment.Status === 'Completed' ? 'success' : 'primary'}>
-                              {appointment.Status}
+                            <Badge bg={appointment.status === 'Completed' ? 'success' : 'primary'}>
+                              {appointment.status}
                             </Badge>
                           </div>
-                          
                           <div className="d-flex gap-2">
-                            {appointment.Status === 'Booked' && (
+                            {canStartChat(appointment) && (
                               <>
-                                <Button 
-                                  as={Link} 
-                                  to={`/chat/${appointment.AppointmentID}`}
-                                  variant="primary" 
-                                  size="sm"
-                                >
-                                  Start Chat
-                                </Button>
-                                <Button 
-                                  variant="outline-primary" 
-                                  size="sm"
-                                  onClick={() => {/* Handle prescription creation */}}
-                                >
-                                  Create Prescription
-                                </Button>
+                                <Button as={Link} to={`/chat/${appointment.appointmentID}`} variant="primary" size="sm">Start Chat</Button>
+                                <Button variant="outline-primary" size="sm">Create Prescription</Button>
                               </>
                             )}
-                            {appointment.Status === 'Completed' && (
-                              <Button 
-                                variant="outline-secondary" 
-                                size="sm"
-                                disabled
-                              >
-                                Completed
-                              </Button>
+                            {appointment.status === 'Completed' && (
+                              <Button variant="outline-secondary" size="sm" disabled>Completed</Button>
                             )}
                           </div>
                         </Card.Body>

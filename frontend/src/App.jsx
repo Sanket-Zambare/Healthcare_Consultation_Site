@@ -30,6 +30,7 @@ import PaymentsPage from './pages/PaymentsPage';
 import AppointmentsPage from './pages/AppointmentsPage';
 import ChatPage from './pages/ChatPage';
 import PrescriptionsPage from './pages/PrescriptionsPage';
+import CreatePrescriptionPage from './pages/CreatePrescriptionPage';
 
 // Doctor Pages
 import DoctorDashboardPage from './pages/DoctorDashboardPage';
@@ -41,11 +42,13 @@ import ReviewApprovalsPage from './pages/ReviewApprovalsPage'; // ✅ NEW
 
 // Other
 import NotFoundPage from './pages/NotFoundPage';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   return (
-    <AppProvider>
-      <AuthProvider>
+     <AuthProvider>
+       <AppProvider>
+     
         <Router>
           <div className="d-flex flex-column min-vh-100">
             <Header />
@@ -56,6 +59,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register-patient" element={<RegisterPatient />} />
                 <Route path="/register-doctor" element={<RegisterDoctor />} />
+                <Route path="/profile" element={<ProfilePage />} />
 
                 {/* 🩺 Patient Routes */}
                 <Route path="/patient-dashboard" element={
@@ -70,6 +74,7 @@ function App() {
                   </PatientRoute>
                 } />
 
+              
                 <Route path="/book-appointment/:doctorId" element={
                   <PatientRoute>
                     <BookAppointmentPage />
@@ -107,6 +112,12 @@ function App() {
                   </ProtectedRoute>
                 } />
 
+                <Route path="/create-prescription/:appointmentId" element={
+                  <ProtectedRoute>
+                    <CreatePrescriptionPage />
+                  </ProtectedRoute>
+                } />
+
                 {/* 👨‍⚕️ Doctor Routes */}
                 <Route path="/doctor-dashboard" element={
                   <DoctorRoute>
@@ -141,8 +152,9 @@ function App() {
             <ToastNotification />
           </div>
         </Router>
+         </AppProvider>
       </AuthProvider>
-    </AppProvider>
+   
   );
 }
 

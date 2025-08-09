@@ -1,116 +1,191 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Alert, Row, Col } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useApp } from '../../context/AppContext';
 import apiService from '../../services/apiService';
 import '../../assets/styles/custom.css';
 
-const AppointmentForm = ({ doctor }) => {
-  const [formData, setFormData] = useState({
-    date: '',
-    timeSlot: ''
-  });
+const AppointmentForm = ({ doctor: doctorProp }) => {
+  const [formData, setFormData] = useState({ date: '', timeSlot: '' });
   const [availableSlots, setAvailableSlots] = useState([]);
   const [bookedSlots, setBookedSlots] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [doctor, setDoctor] = useState(doctorProp || null);
+  const [doctorAvailability, setDoctorAvailability] = useState([]);
 
   const { user } = useAuth();
   const { showToast } = useApp();
   const navigate = useNavigate();
+  const { id: doctorIdFromURL } = useParams();
 
   useEffect(() => {
-    if (formData.date) {
-      fetchAvailableSlots();
-    }
-  }, [formData.date]);
+    const fetchDoctor = async () => {
+      try {
+        const id = doctorProp?.doctorID || doctorIdFromURL;
+        const fetchedDoctor = await apiService.getDoctorById(id);
+        setDoctor(fetchedDoctor);
+        setDoctorAvailability(fetchedDoctor.availability || []);
+      } catch (err) {
+        console.error('Doctor fetch error:', err);
+        setError('Failed to load doctor details.');
+      }
+    };
+    fetchDoctor();
+  }, [doctorProp, doctorIdFromURL]);
+
+  useEffect(() => {
+    if (formData.date && doctor) fetchAvailableSlots();
+  }, [formData.date, doctor]);
 
   const fetchAvailableSlots = async () => {
     try {
-      const availability = await apiService.getDoctorAvailability(doctor.DoctorID);
-      const appointments = await apiService.getAppointments(null, doctor.DoctorID);
+      const selectedDay = new Date(formData.date).toLocaleDateString('en-US', {
+        weekday: 'long'
+      });
 
-      const dayBookedSlots = appointments
-        .filter(apt => apt.Date === formData.date && apt.Status !== 'Cancelled')
-        .map(apt => apt.TimeSlot);
+      const availability = doctorAvailability.find(
+        a =>
+          a.day.toLowerCase() === selectedDay.toLowerCase() &&
+          a.status === 'Available'
+      );
 
-      setBookedSlots(dayBookedSlots);
-      const slots = generateTimeSlots(availability);
-      setAvailableSlots(slots);
+      if (!availability) {
+        setAvailableSlots([]);
+        setError(`Doctor is not available on ${selectedDay}`);
+        return;
+      }
+
+      const slots = generateTimeSlots(availability.from, availability.to);
+
+      const allAppointments = await apiService.getBookedAppointmentsByDoctor(
+        doctor.doctorID
+      );
+      console.log('✅ All appointments:', allAppointments);
+
+      const selectedDateFormatted = new Date(formData.date).toLocaleDateString('en-US');
+
+      const normalize = (val) => val?.trim().toLowerCase();
+
+      const booked = allAppointments
+        .filter(app => {
+          const appDate = new Date(app.date).toLocaleDateString('en-US');
+          return appDate === selectedDateFormatted;
+        })
+        .map(app => normalize(app.timeSlot));
+
+      console.log('📅 Booked slots for selected date:', booked);
+
+      const filteredSlots = slots.filter(
+        slot => !booked.includes(normalize(slot))
+      );
+
+      console.log('🟨 Filtered Available Slots:', filteredSlots);
+
+      setBookedSlots(booked);
+      setAvailableSlots(filteredSlots);
+      setError('');
     } catch (err) {
-      console.error('Failed to fetch slots:', err);
+      console.error('Slot fetch error:', err);
+      setError('Failed to load available time slots.');
     }
   };
 
-  const generateTimeSlots = (availability) => {
-    return [
-      '09:00 AM - 10:00 AM',
-      '10:00 AM - 11:00 AM',
-      '11:00 AM - 12:00 PM',
-      '02:00 PM - 03:00 PM',
-      '03:00 PM - 04:00 PM',
-      '04:00 PM - 05:00 PM'
-    ];
+  const generateTimeSlots = (from, to) => {
+    const slots = [];
+    const [startHour, startMin] = from.split(':').map(Number);
+    const [endHour, endMin] = to.split(':').map(Number);
+
+    const startTime = new Date();
+    startTime.setHours(startHour, startMin, 0, 0);
+
+    const endTime = new Date();
+    endTime.setHours(endHour, endMin, 0, 0);
+
+    while (startTime < endTime) {
+      const slotStart = new Date(startTime);
+      startTime.setMinutes(startTime.getMinutes() + 60);
+      const slotEnd = new Date(startTime);
+
+      if (slotEnd > endTime) break;
+
+      slots.push(`${formatTime(slotStart)} - ${formatTime(slotEnd)}`);
+    }
+
+    return slots;
   };
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const formatTime = date => {
+    const hours = date.getHours() % 12 || 12;
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const period = date.getHours() >= 12 ? 'PM' : 'AM';
+    return `${hours.toString().padStart(2, '0')}:${minutes} ${period}`;
   };
 
-  const handleSubmit = async (e) => {
+  const handleChange = e => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
     if (!formData.date || !formData.timeSlot) {
-      setError('Please select both date and time slot.');
+      setError('Please select a valid date and time slot.');
       setLoading(false);
       return;
     }
 
-    if (bookedSlots.includes(formData.timeSlot)) {
-      setError('This time slot is already booked. Please choose another one.');
+    const selectedDay = new Date(formData.date).toLocaleDateString('en-US', {
+      weekday: 'long'
+    });
+    const isAvailable = doctorAvailability.some(
+      a =>
+        a.day.toLowerCase() === selectedDay.toLowerCase() &&
+        a.status === 'Available'
+    );
+
+    if (!isAvailable) {
+      setError(`Doctor is not available on ${selectedDay}`);
       setLoading(false);
       return;
     }
+
+    if (bookedSlots.includes(formData.timeSlot.trim().toLowerCase())) {
+      setError('Selected slot already booked. Choose another.');
+      setLoading(false);
+      return;
+    }
+
+    const newAppointment = {
+      doctorID: doctor.doctorID,
+      patientID: user.patientID,
+      date: formData.date,
+      timeSlot: formData.timeSlot,
+      status: 'Booked',
+      paymentStatus: 'Unpaid'
+    };
 
     try {
-      const appointmentData = {
-        DoctorID: doctor.DoctorID,
-        PatientID: user.PatientID,
-        Date: formData.date,
-        TimeSlot: formData.timeSlot,
-        Status: 'Pending',
-        PaymentStatus: 'Pending'
-      };
-
+      const created = await apiService.createAppointment(newAppointment);
       showToast('Redirecting to payment...', 'info');
-
-      navigate('/payment', {
-        state: {
-          appointment: appointmentData,
-          amount: 50.0
-        }
-      });
+      navigate(`/payment/${created.appointmentID}?doctorId=${doctor.doctorID}`);
     } catch (err) {
-      console.error(err);
-      setError('Unexpected error.');
-      showToast('Something went wrong. Please try again.', 'danger');
+      console.error('Submit error:', err);
+      showToast('Something went wrong.', 'danger');
+      setError('Could not create appointment. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
   const getMinDate = () => new Date().toISOString().split('T')[0];
-
   const getMaxDate = () => {
-    const maxDate = new Date();
-    maxDate.setDate(maxDate.getDate() + 30);
-    return maxDate.toISOString().split('T')[0];
+    const d = new Date();
+    d.setDate(d.getDate() + 30);
+    return d.toISOString().split('T')[0];
   };
 
   return (
@@ -138,31 +213,26 @@ const AppointmentForm = ({ doctor }) => {
         <Form.Group className="mb-4">
           <Form.Label>Available Time Slots</Form.Label>
           <div className="d-flex flex-wrap gap-2">
-            {availableSlots.map(slot => {
-              const isBooked = bookedSlots.includes(slot);
-              return (
-                <div
-                  key={slot}
-                  className={`availability-slot ${formData.timeSlot === slot ? 'selected' : ''} ${isBooked ? 'disabled' : ''}`}
-                  onClick={() => !isBooked && setFormData({ ...formData, timeSlot: slot })}
-                  style={{
-                    pointerEvents: isBooked ? 'none' : 'auto',
-                    opacity: isBooked ? 0.5 : 1
-                  }}
-                >
-                  {slot} {isBooked && '(Booked)'}
-                </div>
-              );
-            })}
+            {availableSlots.map(slot => (
+              <div
+                key={slot}
+                className={`availability-slot ${formData.timeSlot === slot ? 'selected' : ''}`}
+                onClick={() => setFormData({ ...formData, timeSlot: slot })}
+              >
+                {slot}
+              </div>
+            ))}
           </div>
           {availableSlots.length === 0 && (
-            <p className="text-muted mt-2">No available slots for this date</p>
+            <p className="text-muted mt-2">
+              No available slots for this date.
+            </p>
           )}
         </Form.Group>
       )}
 
       <Alert variant="info">
-        <strong>Consultation Fee:</strong> $50.00
+        <strong>Consultation Fee:</strong> ₹500
       </Alert>
 
       <Button
@@ -172,7 +242,7 @@ const AppointmentForm = ({ doctor }) => {
         disabled={loading || !formData.date || !formData.timeSlot}
         className="w-100"
       >
-        {loading ? 'Redirecting...' : 'Proceed to Payment'}
+        {loading ? 'Booking...' : 'Proceed to Payment'}
       </Button>
     </Form>
   );

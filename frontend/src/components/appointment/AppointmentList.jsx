@@ -21,7 +21,7 @@ const AppointmentList = ({ appointments, userRole, onAppointmentUpdate }) => {
   return (
     <Row className="g-3">
       {appointments.map(appointment => (
-        <Col key={appointment.AppointmentID} md={6} lg={4}>
+        <Col key={appointment.appointmentID} md={6} lg={4}>
           <AppointmentCard 
             appointment={appointment}
             userRole={userRole}

@@ -3,6 +3,7 @@ import { Form, Button, Alert, Row, Col } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useApp } from '../../context/AppContext';
+import apiService from '../../services/apiService';
 
 const PatientRegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -23,6 +24,29 @@ const PatientRegisterForm = () => {
   const { showToast } = useApp();
   const navigate = useNavigate();
 
+  const isValidIndianMobileNumber = (number) => {
+    const indianMobileRegex = /^[6-9]\d{9}$/;
+    return indianMobileRegex.test(number);
+  };
+
+  const isStrongPassword = (password) => {
+    const strongPasswordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,}$/;
+    return strongPasswordRegex.test(password);
+  };
+
+  const isValidEmail = (email) => {
+    // Accepts only emails like devyani@gmail.com
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|hotmail)\.com$/;
+    return emailRegex.test(email);
+  };
+
+  const isValidDOB = (dob) => {
+    const selectedDate = new Date(dob);
+    const today = new Date();
+    return selectedDate < today;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -33,27 +57,62 @@ const PatientRegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError('');
+    setLoading(true);
+
+    if (!isValidEmail(formData.Email)) {
+      setError('Please enter a valid email (e.g. devyani@gmail.com). Only Gmail, Yahoo, and Hotmail are allowed.');
+      setLoading(false);
+      return;
+    }
+
+    if (!isValidDOB(formData.DOB)) {
+      setError('Please enter a valid date of birth.');
+      setLoading(false);
+      return;
+    }
 
     if (formData.Password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+      setError('Passwords do not match.');
+      setLoading(false);
+      return;
+    }
+
+    if (!isStrongPassword(formData.Password)) {
+      setError(
+        'Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character.'
+      );
+      setLoading(false);
+      return;
+    }
+
+    if (!isValidIndianMobileNumber(formData.ContactNumber)) {
+      setError('Contact number must be a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9.');
       setLoading(false);
       return;
     }
 
     try {
-      const patientData = { ...formData };
-      delete patientData.confirmPassword;
+      const normalizedEmail = formData.Email.trim().toLowerCase();
+      const emailExists = await apiService.checkPatientEmailExists(normalizedEmail);
+      if (emailExists) {
+        setError('This email is already registered. Please login.');
+        setLoading(false);
+        return;
+      }
 
-      console.log("Payload to send:", JSON.stringify(patientData)); // Optional debug
+      const patientData = {
+        ...formData,
+        Email: normalizedEmail
+      };
+      delete patientData.confirmPassword;
 
       await registerPatient(patientData);
       showToast('Registration successful! Please login to continue.', 'success');
       navigate('/login');
     } catch (err) {
-      setError(err.message);
-      showToast(err.message, 'error');
+      setError(err.message || 'Registration failed');
+      showToast(err.message || 'Registration failed', 'error');
     } finally {
       setLoading(false);
     }

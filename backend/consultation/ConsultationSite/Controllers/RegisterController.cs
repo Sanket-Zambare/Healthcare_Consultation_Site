@@ -22,7 +22,7 @@ namespace ConsultationSite.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
+            patient.Password = BCrypt.Net.BCrypt.HashPassword(patient.Password);
             await _context.Patients.AddAsync(patient);
             await _context.SaveChangesAsync();
 
@@ -44,7 +44,7 @@ namespace ConsultationSite.Controllers
                     availability.Doctor = doctor;
                 }
             }
-
+            doctor.Password = BCrypt.Net.BCrypt.HashPassword(doctor.Password);
             await _context.Doctors.AddAsync(doctor);
             await _context.SaveChangesAsync();
 
@@ -57,7 +57,7 @@ namespace ConsultationSite.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
+            admin.Password = BCrypt.Net.BCrypt.HashPassword(admin.Password);
             await _context.Admins.AddAsync(admin);
             await _context.SaveChangesAsync();
 

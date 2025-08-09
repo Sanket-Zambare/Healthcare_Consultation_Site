@@ -1,30 +1,42 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\",
+  "WorkspaceRootPath": "C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\models\\doctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\final_project\\final project\\backend\\consultation\\consultationsite\\migrations\\20250809221333_adddegreecolumntodoctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\migrations\\20250809221333_adddegreecolumntodoctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\final_project\\final project\\backend\\consultation\\consultationsite\\models\\doctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\models\\doctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\models\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\models\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ASUS\\AppData\\Local\\Temp\\mmugug1t..sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\Migrations\\20250809220537_AddDegreeToDoctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ConsultationSite\\Migrations\\20250809220537_AddDegreeToDoctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\data\\consultationcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\data\\consultationcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\Migrations\\20250809220057_AddDegreeToDoctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ConsultationSite\\Migrations\\20250809220057_AddDegreeToDoctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\controllers\\doctorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\controllers\\doctorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\Migrations\\20250809215422_AddDegreeToDoctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ConsultationSite\\Migrations\\20250809215422_AddDegreeToDoctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\cdac_project\\backend\\consultation\\consultationsite\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/._SQLEXPRESS01/consultationSite/True/SqlTable/dbo.Admins.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|c:\\users\\asus\\desktop\\final_project\\final project\\backend\\consultation\\consultationsite\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{9B883026-4143-4EEA-9D86-D39E9D75EF87}|ConsultationSite\\ConsultationSite.csproj|solutionrelative:consultationsite\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ASUS\\AppData\\Local\\Temp\\mmugug1t..sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ASUS\\AppData\\Local\\Temp\\mmugug1t..sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|ResultFrame"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,80 +46,106 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "DoctorController.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Controllers\\DoctorController.cs",
-              "RelativeDocumentMoniker": "ConsultationSite\\Controllers\\DoctorController.cs",
-              "ToolTip": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Controllers\\DoctorController.cs",
-              "RelativeToolTip": "ConsultationSite\\Controllers\\DoctorController.cs",
-              "ViewState": "AgIAAK0AAAAAAAAAAAAQwNAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-04T19:26:03.947Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Program.cs",
-              "RelativeDocumentMoniker": "ConsultationSite\\Program.cs",
-              "ToolTip": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Program.cs",
-              "RelativeToolTip": "ConsultationSite\\Program.cs",
-              "ViewState": "AgIAAGkAAAAAAAAAAAAYwHcAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-04T19:15:46.406Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ConsultationContext.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Data\\ConsultationContext.cs",
-              "RelativeDocumentMoniker": "ConsultationSite\\Data\\ConsultationContext.cs",
-              "ToolTip": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Data\\ConsultationContext.cs",
-              "RelativeToolTip": "ConsultationSite\\Data\\ConsultationContext.cs",
-              "ViewState": "AgIAAEcAAAAAAAAAAAAYwGAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-04T18:20:07.748Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Doctor.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Models\\Doctor.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\Models\\Doctor.cs",
               "RelativeDocumentMoniker": "ConsultationSite\\Models\\Doctor.cs",
-              "ToolTip": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Models\\Doctor.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\Models\\Doctor.cs",
               "RelativeToolTip": "ConsultationSite\\Models\\Doctor.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAkwAsAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAABoAAAAAAAAAAAAgwCQAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-04T17:56:44.051Z",
+              "WhenOpened": "2025-08-09T22:16:42.592Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Admin.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Models\\Admin.cs",
-              "RelativeDocumentMoniker": "ConsultationSite\\Models\\Admin.cs",
-              "ToolTip": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Models\\Admin.cs",
-              "RelativeToolTip": "ConsultationSite\\Models\\Admin.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAqwBcAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "20250809221333_AddDegreeColumnToDoctor.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\Migrations\\20250809221333_AddDegreeColumnToDoctor.cs",
+              "RelativeDocumentMoniker": "ConsultationSite\\Migrations\\20250809221333_AddDegreeColumnToDoctor.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\Migrations\\20250809221333_AddDegreeColumnToDoctor.cs",
+              "RelativeToolTip": "ConsultationSite\\Migrations\\20250809221333_AddDegreeColumnToDoctor.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-04T17:48:59.296Z"
+              "WhenOpened": "2025-08-09T22:13:33.323Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "20250809220537_AddDegreeToDoctor.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\Migrations\\20250809220537_AddDegreeToDoctor.cs",
+              "RelativeDocumentMoniker": "ConsultationSite\\Migrations\\20250809220537_AddDegreeToDoctor.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\Migrations\\20250809220537_AddDegreeToDoctor.cs",
+              "RelativeToolTip": "ConsultationSite\\Migrations\\20250809220537_AddDegreeToDoctor.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-09T22:05:38.113Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "AdminController.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Controllers\\AdminController.cs",
-              "RelativeDocumentMoniker": "ConsultationSite\\Controllers\\AdminController.cs",
-              "ToolTip": "C:\\Users\\ASUS\\Desktop\\CDAC_Project\\backend\\consultation\\ConsultationSite\\Controllers\\AdminController.cs",
-              "RelativeToolTip": "ConsultationSite\\Controllers\\AdminController.cs",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAYwG0AAAAAAAAAAAAAAA==",
+              "Title": "SQLQuery1.sql ",
+              "DocumentMoniker": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\mmugug1t..sql",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\AppData\\Local\\Temp\\mmugug1t..sql",
+              "ToolTip": "SQLQuery1.sql *",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-08-09T22:02:33.052Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "20250809220057_AddDegreeToDoctor.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\Migrations\\20250809220057_AddDegreeToDoctor.cs",
+              "RelativeDocumentMoniker": "ConsultationSite\\Migrations\\20250809220057_AddDegreeToDoctor.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\Migrations\\20250809220057_AddDegreeToDoctor.cs",
+              "RelativeToolTip": "ConsultationSite\\Migrations\\20250809220057_AddDegreeToDoctor.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-04T17:48:55.063Z"
+              "WhenOpened": "2025-08-09T22:00:57.734Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "20250809215422_AddDegreeToDoctor.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\Migrations\\20250809215422_AddDegreeToDoctor.cs",
+              "RelativeDocumentMoniker": "ConsultationSite\\Migrations\\20250809215422_AddDegreeToDoctor.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\Migrations\\20250809215422_AddDegreeToDoctor.cs",
+              "RelativeToolTip": "ConsultationSite\\Migrations\\20250809215422_AddDegreeToDoctor.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-09T21:54:22.858Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "dbo.Admins [Data]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/._SQLEXPRESS01/consultationSite/True/SqlTable/dbo.Admins.sql",
+              "ToolTip": "dbo.Admins [Data]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-08-09T20:50:14.897Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\appsettings.json",
+              "RelativeDocumentMoniker": "ConsultationSite\\appsettings.json",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\Final_Project\\Final Project\\backend\\consultation\\ConsultationSite\\appsettings.json",
+              "RelativeToolTip": "ConsultationSite\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAACQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-08-09T20:41:03.123Z",
+              "EditorCaption": ""
             }
           ]
         }
