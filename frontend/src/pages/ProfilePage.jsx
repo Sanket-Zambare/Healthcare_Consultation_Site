@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Container, Row, Col } from 'react-bootstrap';
+import { Card, Container, Row, Col, Button } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import apiService from '../services/apiService'; // Make sure the path is correct
 
 const ProfilePage = () => {
   const { user } = useAuth();
   const [availability, setAvailability] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDoctorAvailability = async () => {

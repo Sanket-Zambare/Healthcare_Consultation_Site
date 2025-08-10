@@ -40,7 +40,7 @@ const PrescriptionForm = ({ appointment, onPrescriptionCreated, onCancel }) => {
     <Card>
       <Card.Header className="bg-primary text-white">
         <h5 className="mb-0">Create Prescription</h5>
-        <small>{new Date(appointment.date).toLocaleDateString()} at {appointment.timeSlot} • Patient: {appointment.patientName}</small>
+        <small>Appointment #{appointment.appointmentID} • Patient: {appointment.patientName || `Patient #${appointment.patientID}`}</small>
       </Card.Header>
       <Card.Body>
         {error && <Alert variant="danger">{error}</Alert>}

@@ -83,7 +83,7 @@ const BookAppointmentPage = () => {
               <h4>{doctor?.name}</h4>
               <p className="text-muted">{doctor?.specialization}</p>
               <p className="small">
-                <strong>Experience:</strong> {doctor?.experience}<br />
+                <strong>Experience:</strong> {doctor?.experience || '5+'} years<br />
                 <strong>Availability:</strong> {formatAvailability(doctor?.availability)}
               </p>
             </Card.Body>

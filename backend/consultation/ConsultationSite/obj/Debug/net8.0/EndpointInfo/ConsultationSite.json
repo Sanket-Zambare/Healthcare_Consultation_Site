@@ -1405,6 +1405,55 @@
         }
       }
     },
+    "/api/payments/patient/{patientId}": {
+      "get": {
+        "tags": [
+          "Payments"
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Payment"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Payment"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Payment"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/payments/create": {
       "post": {
         "tags": [
@@ -1449,6 +1498,18 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/payments/update-patient-ids": {
+      "put": {
+        "tags": [
+          "Payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -1984,7 +2045,6 @@
       "Doctor": {
         "required": [
           "contactNumber",
-          "degree",
           "email",
           "name",
           "password"
@@ -2014,14 +2074,9 @@
             "type": "string",
             "nullable": true
           },
-          "degree": {
-            "minLength": 1,
-            "pattern": "^(MD|MBBS)$",
-            "type": "string"
-          },
           "experience": {
             "maximum": 50,
-            "minimum": 5,
+            "minimum": 0,
             "type": "integer",
             "format": "int32"
           },
@@ -2227,6 +2282,14 @@
           "appointment": {
             "$ref": "#/components/schemas/Appointment"
           },
+          "patientID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "patient": {
+            "$ref": "#/components/schemas/Patient"
+          },
           "amount": {
             "type": "number",
             "format": "double",
@@ -2260,14 +2323,6 @@
           "razorpaySignature": {
             "type": "string",
             "nullable": true
-          },
-          "patientID": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "patient": {
-            "$ref": "#/components/schemas/Patient"
           }
         },
         "additionalProperties": false

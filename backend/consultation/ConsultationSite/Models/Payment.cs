@@ -15,6 +15,11 @@
             [ForeignKey("AppointmentID")]
             public Appointment? Appointment { get; set; }
 
+            public int? PatientID { get; set; }
+
+            [ForeignKey("PatientID")]
+            public virtual Patient? Patient { get; set; }
+
             public decimal? Amount { get; set; }
 
             public DateTime? PaymentDate { get; set; }
@@ -30,10 +35,5 @@
             public string? RazorpayPaymentId { get; set; }
 
             public string? RazorpaySignature { get; set; }
-
-            public int? PatientID { get; set; }
-
-            [ForeignKey("PatientID")]
-            public virtual Patient? Patient { get; set; }
         }
     }

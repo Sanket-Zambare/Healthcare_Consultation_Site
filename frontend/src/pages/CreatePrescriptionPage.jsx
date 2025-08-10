@@ -125,7 +125,7 @@ const CreatePrescriptionPage = () => {
           <div className="mb-4">
             <h3>Create Prescription</h3>
             <p className="text-muted">
-              Creating prescription for {appointment.patientName} • {new Date(appointment.date).toLocaleDateString()} at {appointment.timeSlot}
+              Creating prescription for appointment #{appointment.appointmentID} • Patient: {appointment.patientName || `Patient #${appointment.patientID}`}
             </p>
           </div>
 
