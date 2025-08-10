@@ -53,17 +53,16 @@ const PaymentsPage = () => {
         return;
       }
 
-      const patientId = appointment.patientID; // ✅ Correct casing
-
+      // Patient info is available through the appointment object
       const payload = {
         AppointmentID: appointment.appointmentID,
-        Amount: 50,
+        Amount: 500, // Fixed: Changed from 50 to 500 to match frontend display
         EndDate: new Date().toISOString().split("T")[0],
         PaymentMode: 'RazorPay',
         RazorpayOrderId: paymentResponse?.razorpay_order_id || 'order_dummy',
         RazorpayPaymentId: paymentResponse?.razorpay_payment_id || 'pay_dummy',
-        RazorpaySignature: paymentResponse?.razorpay_signature || 'signature_dummy',
-        PatientID: patientId
+        RazorpaySignature: paymentResponse?.razorpay_signature || 'signature_dummy'
+        // Note: PatientID is not needed - patient info comes from the appointment
       };
 
       console.log("📤 Sending Payment Payload:", payload);

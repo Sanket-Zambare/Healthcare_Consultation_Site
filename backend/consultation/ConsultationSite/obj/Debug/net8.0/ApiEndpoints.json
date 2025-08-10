@@ -881,6 +881,42 @@
     ]
   },
   {
+    "ContainingType": "ConsultationSite.Controllers.PaymentsController",
+    "Method": "GetPaymentsByPatient",
+    "RelativePath": "api/payments/patient/{patientId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "patientId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ConsultationSite.Models.Payment, ConsultationSite, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ConsultationSite.Controllers.PaymentsController",
+    "Method": "UpdatePaymentPatientIds",
+    "RelativePath": "api/payments/update-patient-ids",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ConsultationSite.Controllers.PrescriptionController",
     "Method": "GetPrescriptions",
     "RelativePath": "api/prescription",

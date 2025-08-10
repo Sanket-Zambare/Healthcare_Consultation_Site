@@ -36,7 +36,6 @@ const PatientRegisterForm = () => {
   };
 
   const isValidEmail = (email) => {
-    // Accepts only emails like devyani@gmail.com
     const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|hotmail)\.com$/;
     return emailRegex.test(email);
   };
@@ -44,7 +43,12 @@ const PatientRegisterForm = () => {
   const isValidDOB = (dob) => {
     const selectedDate = new Date(dob);
     const today = new Date();
-    return selectedDate < today;
+
+    // Calculate the latest valid DOB (must be at least 16 years old)
+    const minDOB = new Date();
+    minDOB.setFullYear(today.getFullYear() - 16);
+
+    return selectedDate <= minDOB && selectedDate <= today;
   };
 
   const handleChange = (e) => {
@@ -67,7 +71,7 @@ const PatientRegisterForm = () => {
     }
 
     if (!isValidDOB(formData.DOB)) {
-      setError('Please enter a valid date of birth.');
+      setError('You must be at least 16 years old to register.');
       setLoading(false);
       return;
     }
@@ -205,6 +209,7 @@ const PatientRegisterForm = () => {
               name="DOB"
               value={formData.DOB}
               onChange={handleChange}
+              max={new Date().toISOString().split('T')[0]} // restricts to today or earlier
               required
             />
           </Form.Group>

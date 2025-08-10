@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, Alert, Row, Col, Card } from 'react-bootstrap';
+import { Form, Button, Alert, Row, Col } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useApp } from '../../context/AppContext';
@@ -13,7 +13,6 @@ const DoctorRegisterForm = () => {
     Password: '',
     confirmPassword: '',
     Specialization: '',
-    Degree: '',
     Experience: '',
     ContactNumber: '',
     Day: '',
@@ -37,6 +36,11 @@ const DoctorRegisterForm = () => {
   const isValidEmail = (email) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
+  const isValidExperience = (experience) => {
+    const exp = parseInt(experience);
+    return exp >= 5 && exp <= 50;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -56,14 +60,8 @@ const DoctorRegisterForm = () => {
       return;
     }
 
-    if (parseInt(formData.Experience) < 5) {
-      setError('Doctor must have at least 5 years of experience.');
-      setLoading(false);
-      return;
-    }
-
-    if (!formData.Degree || !['MD', 'MBBS'].includes(formData.Degree)) {
-      setError('Please select a valid medical degree (MD or MBBS).');
+    if (!isValidExperience(formData.Experience)) {
+      setError('Experience must be at least 5 years and cannot exceed 50 years.');
       setLoading(false);
       return;
     }
@@ -101,7 +99,6 @@ const DoctorRegisterForm = () => {
         Email: formData.Email,
         Password: formData.Password,
         Specialization: formData.Specialization,
-        Degree: formData.Degree,
         Experience: parseInt(formData.Experience),
         ContactNumber: formData.ContactNumber,
         ProfileStatus: 'Pending',
@@ -132,11 +129,6 @@ const DoctorRegisterForm = () => {
     'Orthopedics', 'Gynecology', 'Ophthalmology', 'ENT', 'General Medicine'
   ];
 
-  const medicalDegrees = [
-    { value: 'MD', label: 'MD (Doctor of Medicine)' },
-    { value: 'MBBS', label: 'MBBS (Bachelor of Medicine, Bachelor of Surgery)' }
-  ];
-
   const daysOfWeek = [
     'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
   ];
@@ -149,214 +141,184 @@ const DoctorRegisterForm = () => {
   ];
 
   return (
-    <Card className="shadow-sm">
-      <Card.Body className="p-4">
-        <h3 className="text-center mb-4 text-primary">Doctor Registration</h3>
-        
-        <Form onSubmit={handleSubmit}>
-          {error && <Alert variant="danger">{error}</Alert>}
+    <Form onSubmit={handleSubmit}>
+      {error && <Alert variant="danger">{error}</Alert>}
 
-          {/* Personal Information Section */}
-          <div className="mb-4">
-            <h5 className="text-secondary mb-3">Personal Information</h5>
-            <Row>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label className="fw-semibold">Full Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="Name"
-                    value={formData.Name}
-                    onChange={handleChange}
-                    placeholder="Dr. John Doe"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label className="fw-semibold">Email Address</Form.Label>
-                  <Form.Control
-                    type="email"
-                    name="Email"
-                    value={formData.Email}
-                    onChange={handleChange}
-                    placeholder="doctor@example.com"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
+      <Row>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>Full Name</Form.Label>
+            <Form.Control
+              type="text"
+              name="Name"
+              value={formData.Name}
+              onChange={handleChange}
+              placeholder="Dr. John Doe"
+              required
+            />
+          </Form.Group>
+        </Col>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>Email Address</Form.Label>
+            <Form.Control
+              type="email"
+              name="Email"
+              value={formData.Email}
+              onChange={handleChange}
+              placeholder="doctor@example.com"
+              required
+            />
+          </Form.Group>
+        </Col>
+      </Row>
 
-            <Row>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label className="fw-semibold">Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    name="Password"
-                    value={formData.Password}
-                    onChange={handleChange}
-                    placeholder="Enter password"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label className="fw-semibold">Confirm Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    placeholder="Confirm password"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-          </div>
+      <Row>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              name="Password"
+              value={formData.Password}
+              onChange={handleChange}
+              placeholder="Enter password"
+              required
+            />
+          </Form.Group>
+        </Col>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Confirm password"
+              required
+            />
+          </Form.Group>
+        </Col>
+      </Row>
 
-          {/* Professional Information Section */}
-          <div className="mb-4">
-            <h5 className="text-secondary mb-3">Professional Information</h5>
-            <Row>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label className="fw-semibold">Medical Degree</Form.Label>
-                  <Form.Select
-                    name="Degree"
-                    value={formData.Degree}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="">Select Medical Degree</option>
-                    {medicalDegrees.map(degree => (
-                      <option key={degree.value} value={degree.value}>{degree.label}</option>
-                    ))}
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label className="fw-semibold">Specialization</Form.Label>
-                  <Form.Select
-                    name="Specialization"
-                    value={formData.Specialization}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="">Select Specialization</option>
-                    {specializations.map(spec => (
-                      <option key={spec} value={spec}>{spec}</option>
-                    ))}
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-            </Row>
+      <Row>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>Specialization</Form.Label>
+            <Form.Select
+              name="Specialization"
+              value={formData.Specialization}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Specialization</option>
+              {specializations.map(spec => (
+                <option key={spec} value={spec}>{spec}</option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+        </Col>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>Experience (years) - Minimum 5 years required</Form.Label>
+            <Form.Control
+              type="number"
+              name="Experience"
+              value={formData.Experience}
+              onChange={handleChange}
+              placeholder="Enter experience (5-50 years)"
+              min="5"
+              max="50"
+              required
+            />
+            <Form.Text className="text-muted">
+              Minimum 5 years of experience required
+            </Form.Text>
+          </Form.Group>
+        </Col>
+      </Row>
 
-            <Row>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label className="fw-semibold">Experience (years)</Form.Label>
-                  <Form.Control
-                    type="number"
-                    name="Experience"
-                    value={formData.Experience}
-                    onChange={handleChange}
-                    min="5"
-                    placeholder="Minimum 5 years"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label className="fw-semibold">Contact Number</Form.Label>
-                  <Form.Control
-                    type="tel"
-                    name="ContactNumber"
-                    value={formData.ContactNumber}
-                    onChange={handleChange}
-                    placeholder="Enter your contact number"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-          </div>
+      <Row>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>Contact Number</Form.Label>
+            <Form.Control
+              type="tel"
+              name="ContactNumber"
+              value={formData.ContactNumber}
+              onChange={handleChange}
+              placeholder="Enter your contact number"
+              required
+            />
+          </Form.Group>
+        </Col>
 
-          {/* Availability Section */}
-          <div className="mb-4">
-            <h5 className="text-secondary mb-3">Availability</h5>
-            <Row>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label className="fw-semibold">Preferred Day</Form.Label>
-                  <Form.Select
-                    name="Day"
-                    value={formData.Day}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="">Select Day</option>
-                    {daysOfWeek.map(day => (
-                      <option key={day} value={day}>{day}</option>
-                    ))}
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label className="fw-semibold">Time Slot</Form.Label>
-                  <Form.Select
-                    onChange={(e) => {
-                      const [from, to] = e.target.value.split(',');
-                      setFormData(prev => ({ ...prev, From: from, To: to }));
-                    }}
-                    required
-                  >
-                    <option value="">Select Time Slot</option>
-                    {timeSlots.map(slot => (
-                      <option key={slot.label} value={`${slot.from},${slot.to}`}>
-                        {slot.label}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-            </Row>
-          </div>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>Day</Form.Label>
+            <Form.Select
+              name="Day"
+              value={formData.Day}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Day</option>
+              {daysOfWeek.map(day => (
+                <option key={day} value={day}>{day}</option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+        </Col>
+      </Row>
 
-          <Button
-            type="submit"
-            variant="primary"
-            size="lg"
-            className="w-100 mb-3"
-            disabled={loading}
-          >
-            {loading ? 'Registering...' : 'Register as Doctor'}
-          </Button>
+      <Row>
+        <Col md={12}>
+          <Form.Group className="mb-3">
+            <Form.Label>Availability Time</Form.Label>
+            <Form.Select
+              onChange={(e) => {
+                const [from, to] = e.target.value.split(',');
+                setFormData(prev => ({ ...prev, From: from, To: to }));
+              }}
+              required
+            >
+              <option value="">Select Time Slot</option>
+              {timeSlots.map(slot => (
+                <option key={slot.label} value={`${slot.from},${slot.to}`}>
+                  {slot.label}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+        </Col>
+      </Row>
 
-          <div className="text-center">
-            <p className="mb-0">
-              Already have an account?{' '}
-              <Link to="/login" className="text-decoration-none fw-semibold">
-                Sign In
-              </Link>
-            </p>
-          </div>
+      <Button
+        type="submit"
+        variant="primary"
+        size="lg"
+        className="w-100 mb-3"
+        disabled={loading}
+      >
+        {loading ? 'Registering...' : 'Register'}
+      </Button>
 
-          <Alert variant="info" className="mt-3">
-            <small>
-              <i className="fas fa-info-circle me-2"></i>
-              Your account will be reviewed by our admin team. You'll be notified once approved.
-            </small>
-          </Alert>
-        </Form>
-      </Card.Body>
-    </Card>
+      <div className="text-center">
+        <p className="mb-0">
+          Already have an account?{' '}
+          <Link to="/login" className="text-decoration-none">
+            Sign In
+          </Link>
+        </p>
+      </div>
+
+      <Alert variant="info" className="mt-3">
+        <small>
+          Your account will be reviewed by our admin team. You'll be notified once approved.
+        </small>
+      </Alert>
+    </Form>
   );
 };
 

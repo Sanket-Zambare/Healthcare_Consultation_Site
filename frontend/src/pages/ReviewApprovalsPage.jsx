@@ -22,12 +22,11 @@ const ReviewApprovals = () => {
 
   const approveDoctor = async (id) => {
     try {
-      // Find the doctor name before approval
-      const doctor = pendingDoctors.find(doc => doc.doctorID === id);
-      const doctorName = doctor ? doctor.name : 'Unknown Doctor';
-      
       await apiService.approveDoctor(id);
-      setMessage(`Dr. ${doctorName} approved successfully.`);
+      // Find the doctor name for the success message
+      const doctor = pendingDoctors.find(d => (d.doctorID || d.DoctorID) === id);
+      const doctorName = doctor?.name || doctor?.Name || `Doctor #${id}`;
+      setMessage(`${doctorName} approved successfully.`);
       fetchPendingDoctors();
     } catch (err) {
       console.error('Approval failed', err);
@@ -54,11 +53,11 @@ const ReviewApprovals = () => {
         <Table striped bordered hover responsive className="mt-3">
           <thead>
             <tr>
-              <th>#ID</th>
               <th>Name</th>
               <th>Email</th>
               <th>Specialization</th>
               <th>Status</th>
+              <th>ID</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -66,16 +65,16 @@ const ReviewApprovals = () => {
             {pendingDoctors.length > 0 ? (
               pendingDoctors.map((doctor) => (
                 <tr key={doctor.doctorID}>
-                  <td>{doctor.doctorID}</td>
-                  <td>{doctor.name}</td>
-                  <td>{doctor.email}</td>
-                  <td>{doctor.specialization}</td>
-                  <td>{doctor.profileStatus}</td>
+                  <td><strong>{doctor.name || doctor.Name}</strong></td>
+                  <td>{doctor.email || doctor.Email}</td>
+                  <td>{doctor.specialization || doctor.Specialization}</td>
+                  <td>{doctor.profileStatus || doctor.ProfileStatus}</td>
+                  <td className="text-muted">#{doctor.doctorID || doctor.DoctorID}</td>
                   <td>
                     <Button
                       variant="success"
                       size="sm"
-                      onClick={() => approveDoctor(doctor.doctorID)}
+                      onClick={() => approveDoctor(doctor.doctorID || doctor.DoctorID)}
                     >
                       Approve
                     </Button>

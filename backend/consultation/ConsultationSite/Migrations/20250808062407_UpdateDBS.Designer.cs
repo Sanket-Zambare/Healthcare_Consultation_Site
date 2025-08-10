@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConsultationSite.Migrations
 {
     [DbContext(typeof(ConsultationContext))]
-    [Migration("20250801121016_consulationMigration")]
-    partial class consulationMigration
+    [Migration("20250808062407_UpdateDBS")]
+    partial class UpdateDBS
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,7 +39,8 @@ namespace ConsultationSite.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -117,13 +118,13 @@ namespace ConsultationSite.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("ProfileStatus")
+                    b.Property<int?>("ProfileStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("Specialization")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DoctorID");
@@ -222,15 +223,18 @@ namespace ConsultationSite.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("MedicalHistory")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Patient_Image")
                         .HasColumnType("nvarchar(max)");
@@ -304,10 +308,6 @@ namespace ConsultationSite.Migrations
 
                     b.Property<int>("DoctorID")
                         .HasColumnType("int");
-
-                    b.Property<string>("FilePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MedicationDetails")
                         .IsRequired()
