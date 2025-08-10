@@ -99,10 +99,6 @@ namespace ConsultationSite.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Degree")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Doctor_Image")
                         .HasColumnType("nvarchar(max)");
 

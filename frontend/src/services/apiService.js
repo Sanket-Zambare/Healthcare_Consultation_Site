@@ -296,15 +296,18 @@ async getAppointmentsWithDoctorName(patientId) {
 
   async getPrescriptions(patientId = null, doctorId = null) {
     try {
+      let res;
       if (doctorId) {
-        const res = await axiosInstance.get(`/prescription/doctor/${doctorId}`);
-        return res.data;
+        res = await axiosInstance.get(`/prescription/doctor/${doctorId}`);
+      } else if (patientId) {
+        res = await axiosInstance.get(`/prescription/patient/${patientId}`);
+      } else {
+        return [];
       }
-      if (patientId) {
-        const res = await axiosInstance.get(`/prescription/patient/${patientId}`);
-        return res.data;
-      }
-      return [];
+      
+      // Process the prescription data to ensure names are available
+      const prescriptions = res.data;
+      return prescriptions.map(prescription => this.processPrescriptionData(prescription));
     } catch (error) {
       console.error('Error fetching prescriptions:', error);
       return [];
@@ -325,8 +328,21 @@ async getAppointmentsWithDoctorName(patientId) {
     try {
       console.log('🔍 API Debug - Fetching prescription for appointment ID:', appointmentId);
       const res = await axiosInstance.get(`/prescription/appointment/${appointmentId}`);
-      console.log('🔍 API Debug - Response:', res.data);
-      return res.data;
+      console.log('🔍 API Debug - Raw Response:', res.data);
+      console.log('🔍 API Debug - Response type:', typeof res.data);
+      console.log('🔍 API Debug - Is Array:', Array.isArray(res.data));
+      
+      if (Array.isArray(res.data)) {
+        console.log('🔍 API Debug - Processing array of prescriptions');
+        const processed = res.data.map(prescription => this.processPrescriptionData(prescription));
+        console.log('🔍 API Debug - Processed prescriptions:', processed);
+        return processed;
+      } else {
+        console.log('🔍 API Debug - Processing single prescription');
+        const processed = this.processPrescriptionData(res.data);
+        console.log('🔍 API Debug - Processed prescription:', processed);
+        return processed;
+      }
     } catch (error) {
       console.error('Error fetching prescription by appointment:', error);
       throw error;
@@ -336,7 +352,9 @@ async getAppointmentsWithDoctorName(patientId) {
   async getPrescriptionById(prescriptionId) {
     try {
       const res = await axiosInstance.get(`/prescription/${prescriptionId}`);
-      return res.data;
+      
+      // Process the prescription data to ensure names are available
+      return this.processPrescriptionData(res.data);
     } catch (error) {
       console.error('Error fetching prescription by ID:', error);
       throw error;
@@ -348,10 +366,89 @@ async getAppointmentsWithDoctorName(patientId) {
   async getPayments(patientId = null) {
     try {
       const res = await axiosInstance.get(`/payment/patient/${patientId}`);
-      return res.data;
+      const payments = res.data;
+      
+      // Enrich payment data with patient information from appointments
+      const enrichedPayments = await Promise.all(
+        payments.map(async (payment) => {
+          try {
+            // Get appointment details to derive patient information
+            const appointment = await this.getAppointmentById(payment.AppointmentID);
+            return {
+              ...payment,
+              patientName: appointment?.patientName || `Patient #${appointment?.patientID}`,
+              doctorName: appointment?.doctorName || `Dr. #${appointment?.doctorID}`,
+              appointmentDate: appointment?.date,
+              appointmentTime: appointment?.timeSlot
+            };
+          } catch (error) {
+            console.error('Error enriching payment data:', error);
+            return payment;
+          }
+        })
+      );
+      
+      return enrichedPayments;
     } catch (error) {
       console.error('Error fetching payments:', error);
       return [];
+    }
+  }
+
+  async getAllPayments() {
+    try {
+      const res = await axiosInstance.get('/payment');
+      const payments = res.data;
+      
+      // Enrich payment data with patient information from appointments
+      const enrichedPayments = await Promise.all(
+        payments.map(async (payment) => {
+          try {
+            // Get appointment details to derive patient information
+            const appointment = await this.getAppointmentById(payment.AppointmentID);
+            return {
+              ...payment,
+              patientName: appointment?.patientName || `Patient #${appointment?.patientID}`,
+              doctorName: appointment?.doctorName || `Dr. #${appointment?.doctorID}`,
+              appointmentDate: appointment?.date,
+              appointmentTime: appointment?.timeSlot
+            };
+          } catch (error) {
+            console.error('Error enriching payment data:', error);
+            return payment;
+          }
+        })
+      );
+      
+      return enrichedPayments;
+    } catch (error) {
+      console.error('Error fetching all payments:', error);
+      return [];
+    }
+  }
+
+  async getPaymentById(paymentId) {
+    try {
+      const res = await axiosInstance.get(`/payment/${paymentId}`);
+      const payment = res.data;
+      
+      // Enrich payment data with patient information from appointment
+      try {
+        const appointment = await this.getAppointmentById(payment.AppointmentID);
+        return {
+          ...payment,
+          patientName: appointment?.patientName || `Patient #${appointment?.patientID}`,
+          doctorName: appointment?.doctorName || `Dr. #${appointment?.doctorID}`,
+          appointmentDate: appointment?.date,
+          appointmentTime: appointment?.timeSlot
+        };
+      } catch (error) {
+        console.error('Error enriching payment data:', error);
+        return payment;
+      }
+    } catch (error) {
+      console.error('Error fetching payment by ID:', error);
+      throw error;
     }
   }
 
@@ -442,6 +539,92 @@ async checkPatientEmailExists(email) {
   }
 }
 
+  // ================= Helper Methods for Names =================
+
+  async getDoctorNameById(doctorId) {
+    try {
+      const doctor = await this.getDoctorById(doctorId);
+      return doctor?.name || doctor?.Name || `Dr. #${doctorId}`;
+    } catch (error) {
+      console.error('Error fetching doctor name:', error);
+      return `Dr. #${doctorId}`;
+    }
+  }
+
+  async getPatientNameById(patientId) {
+    try {
+      // Try to get patient name from the context if available
+      // For now, we'll return a placeholder since we don't have a direct getPatientById method
+      return `Patient #${patientId}`;
+    } catch (error) {
+      console.error('Error fetching patient name:', error);
+      return `Patient #${patientId}`;
+    }
+  }
+
+  // Cache for doctor and patient names to avoid repeated API calls
+  _doctorNameCache = new Map();
+  _patientNameCache = new Map();
+
+  async getCachedDoctorName(doctorId) {
+    if (this._doctorNameCache.has(doctorId)) {
+      return this._doctorNameCache.get(doctorId);
+    }
+    
+    const name = await this.getDoctorNameById(doctorId);
+    this._doctorNameCache.set(doctorId, name);
+    return name;
+  }
+
+  async getCachedPatientName(patientId) {
+    if (this._patientNameCache.has(patientId)) {
+      return this._patientNameCache.get(patientId);
+    }
+    
+    const name = await this.getPatientNameById(patientId);
+    this._patientNameCache.set(patientId, name);
+    return name;
+  }
+
+  // Process prescription data to ensure names are available
+  processPrescriptionData(prescription) {
+    console.log('🔍 Processing prescription data:', prescription);
+    
+    // Extract doctor name from various possible sources
+    const doctorName = prescription.doctorName || 
+                      prescription.DoctorName || 
+                      prescription.Doctor?.name || 
+                      prescription.Doctor?.Name || 
+                      prescription.doctor?.name || 
+                      prescription.doctor?.Name ||
+                      (prescription.Doctor && typeof prescription.Doctor === 'object' ? prescription.Doctor.Name : null) ||
+                      (prescription.doctor && typeof prescription.doctor === 'object' ? prescription.doctor.name : null) ||
+                      `Dr. #${prescription.doctorID || prescription.DoctorID}`;
+
+    // Extract patient name from various possible sources
+    const patientName = prescription.patientName || 
+                       prescription.PatientName || 
+                       prescription.Patient?.name || 
+                       prescription.Patient?.Name || 
+                       prescription.patient?.name || 
+                       prescription.patient?.Name ||
+                       (prescription.Patient && typeof prescription.Patient === 'object' ? prescription.Patient.Name : null) ||
+                       (prescription.patient && typeof prescription.patient === 'object' ? prescription.patient.name : null) ||
+                       `Patient #${prescription.patientID || prescription.PatientID}`;
+
+    console.log('🔍 Extracted doctor name:', doctorName);
+    console.log('🔍 Extracted patient name:', patientName);
+
+    // Return processed prescription with guaranteed name properties
+    return {
+      ...prescription,
+      doctorName,
+      patientName,
+      // Also add the processed names in the expected format
+      DoctorName: doctorName,
+      PatientName: patientName
+    };
+  }
 
 }
 

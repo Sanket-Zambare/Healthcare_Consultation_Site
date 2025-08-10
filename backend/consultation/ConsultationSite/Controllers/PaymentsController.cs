@@ -27,14 +27,20 @@ namespace ConsultationSite.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Payment>>> GetPayments()
         {
-            return await _context.Payments.ToListAsync();
+            return await _context.Payments
+                .Include(p => p.Appointment)
+                .Include(p => p.Patient)
+                .ToListAsync();
         }
 
         // GET: api/Payments/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Payment>> GetPayment(int id)
         {
-            var payment = await _context.Payments.FindAsync(id);
+            var payment = await _context.Payments
+                .Include(p => p.Appointment)
+                .Include(p => p.Patient)
+                .FirstOrDefaultAsync(p => p.PaymentID == id);
 
             if (payment == null)
             {
@@ -42,6 +48,18 @@ namespace ConsultationSite.Controllers
             }
 
             return payment;
+        }
+
+        // GET: api/Payments/patient/{patientId}
+        [HttpGet("patient/{patientId}")]
+        public async Task<ActionResult<IEnumerable<Payment>>> GetPaymentsByPatient(int patientId)
+        {
+            var payments = await _context.Payments
+                .Where(p => p.PatientID == patientId)
+                .Include(p => p.Appointment)
+                .ToListAsync();
+
+            return payments;
         }
 
         // PUT: api/Payments/5
@@ -89,6 +107,8 @@ namespace ConsultationSite.Controllers
                 return NotFound("Appointment not found.");
             }
 
+            // Automatically populate PatientID from the appointment
+            payment.PatientID = appointment.PatientID;
             payment.PaymentDate = DateTime.UtcNow;
             payment.Status = payment.Status ?? "Pending";
 
@@ -113,6 +133,34 @@ namespace ConsultationSite.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        // PUT: api/Payments/update-patient-ids
+        [HttpPut("update-patient-ids")]
+        public async Task<IActionResult> UpdatePaymentPatientIds()
+        {
+            try
+            {
+                var paymentsWithoutPatientId = await _context.Payments
+                    .Where(p => p.PatientID == null)
+                    .Include(p => p.Appointment)
+                    .ToListAsync();
+
+                foreach (var payment in paymentsWithoutPatientId)
+                {
+                    if (payment.Appointment != null)
+                    {
+                        payment.PatientID = payment.Appointment.PatientID;
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+                return Ok($"Updated {paymentsWithoutPatientId.Count} payments with PatientID");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error updating payments: {ex.Message}");
+            }
         }
 
         private bool PaymentExists(int id)

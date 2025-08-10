@@ -94,18 +94,22 @@ const PrescriptionsPage = () => {
                     <Card.Body>
                       <div className="d-flex justify-content-between align-items-start mb-3">
                         <h6 className="mb-0">
-                          Prescription - {formatDate(prescription.DateIssued)}
+                          Prescription #{prescription.PrescriptionID}
                         </h6>
                         <span className="badge bg-success">Active</span>
                       </div>
                       
                       <p className="mb-2">
-                        <strong>Doctor:</strong> Dr. {prescription.Doctor?.Name || prescription.doctor?.name || 'Unknown Doctor'}
+                        <strong>Date Issued:</strong> {formatDate(prescription.DateIssued)}
+                      </p>
+                      
+                      <p className="mb-2">
+                        <strong>Doctor:</strong> {prescription.doctorName || prescription.DoctorName}
                       </p>
                       
                       {user.role === 'doctor' && (
                         <p className="mb-2">
-                          <strong>Patient:</strong> {prescription.Patient?.Name || prescription.patient?.name || 'Unknown Patient'}
+                          <strong>Patient:</strong> {prescription.patientName || prescription.PatientName}
                         </p>
                       )}
                       

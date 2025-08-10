@@ -54,7 +54,7 @@ const DoctorCard = ({ doctor }) => {
 
         {/* Experience */}
         <p className="text-muted small mb-3">
-          🎓 {doctor.experience || doctor.Experience || '0'} 
+          🎓 {doctor.experience || doctor.Experience || '5+'} years experience
         </p>
 
         {/* Rating */}

@@ -32,11 +32,7 @@ namespace ConsultationSite.Models
 
         public string? Specialization { get; set; }
 
-        [Required(ErrorMessage = "Medical degree is required")]
-        [RegularExpression(@"^(MD|MBBS)$", ErrorMessage = "Only MD or MBBS degrees are accepted")]
-        public string? Degree { get; set; }
-
-        [Range(5, 50, ErrorMessage = "Experience must be between 5 and 50 years")]
+        [Range(0, 50, ErrorMessage = "Experience must be between 0 and 50 years")]
         public int Experience { get; set; }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
